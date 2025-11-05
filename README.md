@@ -33,8 +33,8 @@
 
 ### 1. تحميل المشروع
 ```bash
-git clone https://github.com/yourusername/rif-activator-a12plus.git
-cd rif-activator-a12plus
+git clone https://github.com/ayoub12-brw/rif-activator-tool.git
+cd rif-activator-tool
 ```
 
 ### 2. إنشاء بيئة افتراضية

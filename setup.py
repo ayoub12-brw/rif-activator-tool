@@ -21,11 +21,11 @@ setup(
     description="Advanced iOS Device Activation System for A12+ Devices",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/rif-activator-a12plus",
+    url="https://github.com/ayoub12-brw/rif-activator-tool",
     project_urls={
-        "Bug Reports": "https://github.com/yourusername/rif-activator-a12plus/issues",
-        "Source": "https://github.com/yourusername/rif-activator-a12plus",
-        "Documentation": "https://github.com/yourusername/rif-activator-a12plus/wiki",
+        "Bug Reports": "https://github.com/ayoub12-brw/rif-activator-tool/issues",
+        "Source": "https://github.com/ayoub12-brw/rif-activator-tool",
+        "Documentation": "https://github.com/ayoub12-brw/rif-activator-tool/wiki",
     },
     packages=find_packages(),
     classifiers=[
