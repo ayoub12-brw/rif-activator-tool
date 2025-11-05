@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: rif-activator-a12plus
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app_simple.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_SECRET
+        generateValue: true
+    healthCheckPath: /api/status

@@ -379,13 +379,18 @@ if __name__ == '__main__':
     print("📱 RiF Activator A12+ - Simplified Edition")
     print("🛡️  Secure iOS Device Activation System")
     print("=" * 50)
-    print("🌐 Server URL: http://127.0.0.1:5000")
-    print("📊 API Documentation: http://127.0.0.1:5000/api/docs")
+    
+    # Get port from environment variable (for deployment)
+    port = int(os.environ.get('PORT', 5000))
+    host = '0.0.0.0'  # Allow external connections for deployment
+    
+    print(f"🌐 Server running on port: {port}")
+    print("📊 API Documentation: /api/docs")
     print("=" * 50)
     
     app.run(
-        host='127.0.0.1',
-        port=5000,
+        host=host,
+        port=port,
         debug=False,
         use_reloader=False
     )

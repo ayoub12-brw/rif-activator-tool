@@ -1,0 +1,19 @@
+# Core Flask Application - Essential for Render
+Flask>=3.0.0
+Werkzeug>=3.0.0
+
+# HTTP Client
+requests>=2.31.0
+
+# Security and Authentication  
+PyJWT>=2.8.0
+python-dotenv>=1.0.0
+
+# System Management
+psutil>=5.9.0
+
+# Image Processing (for QR codes, etc)
+Pillow>=10.0.0
+
+# Web Server for Production
+gunicorn>=21.2.0
