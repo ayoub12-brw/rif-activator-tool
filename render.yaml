@@ -3,8 +3,8 @@ services:
     name: rif-activator-a12plus
     env: python
     plan: free
-    buildCommand: pip install -r requirements.txt
-    startCommand: python app_simple.py
+    buildCommand: pip install -r requirements_render.txt
+    startCommand: gunicorn --config gunicorn_config.py wsgi:application
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
@@ -12,4 +12,6 @@ services:
         value: production
       - key: FLASK_SECRET
         generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 2
     healthCheckPath: /api/status

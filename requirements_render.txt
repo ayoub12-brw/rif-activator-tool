@@ -15,5 +15,5 @@ psutil>=5.9.0
 # Image Processing (for QR codes, etc)
 Pillow>=10.0.0
 
-# Web Server for Production
+# Web Server for Production (WSGI)
 gunicorn>=21.2.0
