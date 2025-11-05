@@ -17,3 +17,4 @@ Pillow>=10.0.0
 
 # Web Server for Production (WSGI)
 gunicorn>=21.2.0
+waitress>=2.1.2

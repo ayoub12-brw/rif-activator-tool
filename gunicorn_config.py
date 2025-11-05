@@ -2,19 +2,26 @@
 # -*- coding: utf-8 -*-
 """
 Gunicorn Configuration for RiF Activator A12+
-إعداد Gunicorn لـ RiF Activator A12+
+إعداد Gunicorn لـ RiF Activator A12+ - Windows Compatible
 """
 
 import os
+import sys
 import multiprocessing
 
 # Server socket
 bind = f"0.0.0.0:{os.environ.get('PORT', '5000')}"
 backlog = 2048
 
-# Worker processes
-workers = min(4, (multiprocessing.cpu_count() * 2) + 1)
-worker_class = "sync"
+# Worker processes - تقليل العدد للويندوز
+if sys.platform == "win32":
+    workers = 1  # Windows يفضل عامل واحد أو threads
+    worker_class = "gthread"
+    threads = 4
+else:
+    workers = min(4, (multiprocessing.cpu_count() * 2) + 1)
+    worker_class = "sync"
+
 worker_connections = 1000
 timeout = 30
 keepalive = 2
