@@ -1,0 +1,813 @@
+{
+  "info": {
+    "description": "\n                ## نظام RiF Activator A12+ API\n                \n                نظام شامل لإدارة وتفعيل الأجهزة مع مزايا متقدمة:\n                \n                ### 🚀 المزايا الأساسية\n                - **تفعيل الأجهزة**: تفعيل آمن وسريع للأجهزة\n                - **إدارة المستخدمين**: نظام أمان متقدم مع 2FA\n                - **التقارير والإحصائيات**: تقارير شاملة ومفصلة\n                - **المراقبة الفورية**: مراقبة النظام في الوقت الفعلي\n                \n                ### 🔒 الأمان\n                - توثيق ثنائي العامل (2FA)\n                - حماية ضد هجمات Brute Force\n                - تشفير البيانات الحساسة\n                - مراقبة محاولات الاختراق\n                \n                ### 📊 التقارير\n                - تقارير تفاعلية مع رسوم بيانية\n                - جدولة دورية للتقارير\n                - تصدير متعدد الأشكال (PDF, JSON, Excel)\n                - إحصائيات شاملة للأداء\n                \n                ### 🌐 الاستخدام\n                جميع APIs تتطلب تسجيل دخول Admin باستثناء endpoints العامة.\n                ",
+    "contact": {
+      "name": "RiF Activator Support",
+      "email": "support@rif-activator.com"
+    },
+    "license": {
+      "name": "Proprietary License",
+      "url": "https://rif-activator.com/license"
+    },
+    "title": "RiF Activator A12+ API",
+    "version": "2.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:5000",
+      "description": "خادم التطوير المحلي"
+    },
+    {
+      "url": "https://api.rif-activator.com",
+      "description": "خادم الإنتاج"
+    }
+  ],
+  "paths": {
+    "/activate": {
+      "post": {
+        "tags": [
+          "Device Activation"
+        ],
+        "summary": "تفعيل جهاز جديد",
+        "description": "تفعيل جهاز iPhone/iPad جديد مع التحقق من الرقم التسلسلي",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActivationRequestSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "تم التفعيل بنجاح",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivationResponseSchema"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "خطأ في البيانات المرسلة",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseSchema"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "الجهاز مفعل مسبقاً",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/check/{serial_number}": {
+      "get": {
+        "tags": [
+          "Device Activation"
+        ],
+        "summary": "فحص حالة تفعيل جهاز",
+        "description": "التحقق من حالة تفعيل جهاز باستخدام الرقم التسلسلي",
+        "parameters": [
+          {
+            "name": "serial_number",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "الرقم التسلسلي للجهاز",
+            "example": "SN123456789"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "معلومات حالة التفعيل",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "activated": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "activation_date": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "device_info": {
+                      "$ref": "#/components/schemas/DeviceInfoSchema"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "الجهاز غير موجود",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/login": {
+      "post": {
+        "tags": [
+          "Admin Authentication"
+        ],
+        "summary": "تسجيل دخول المدير",
+        "description": "تسجيل دخول لوحة الإدارة مع دعم التوثيق الثنائي",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "تم تسجيل الدخول بنجاح",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseSchema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "بيانات دخول خاطئة",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseSchema"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "تم تجاوز عدد المحاولات المسموح",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/setup-2fa": {
+      "post": {
+        "tags": [
+          "Admin Authentication"
+        ],
+        "summary": "إعداد التوثيق الثنائي",
+        "description": "إنشاء وإعداد التوثيق الثنائي لحساب المدير",
+        "security": [
+          {
+            "session_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "تم إعداد 2FA بنجاح",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "qr_code": {
+                      "type": "string",
+                      "description": "QR Code image (base64)"
+                    },
+                    "secret_key": {
+                      "type": "string",
+                      "description": "المفتاح السري"
+                    },
+                    "backup_codes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "رموز النسخ الاحتياطي"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "غير مصرح - يتطلب تسجيل دخول",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reports/generate": {
+      "get": {
+        "tags": [
+          "Reports & Analytics"
+        ],
+        "summary": "توليد تقرير شامل",
+        "description": "توليد تقرير شامل للنظام مع إحصائيات مفصلة",
+        "security": [
+          {
+            "session_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "days",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 30,
+              "minimum": 1,
+              "maximum": 365
+            },
+            "description": "عدد الأيام للتقرير"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "comprehensive",
+                "activation",
+                "security",
+                "revenue"
+              ],
+              "default": "comprehensive"
+            },
+            "description": "نوع التقرير"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "تم توليد التقرير بنجاح",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportResponseSchema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "غير مصرح",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "خطأ في الخادم",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reports/export/{format_type}": {
+      "post": {
+        "tags": [
+          "Reports & Analytics"
+        ],
+        "summary": "تصدير تقرير",
+        "description": "تصدير تقرير بصيغة محددة (PDF, JSON, Excel)",
+        "security": [
+          {
+            "session_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "format_type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pdf",
+                "json",
+                "excel"
+              ]
+            },
+            "description": "صيغة التصدير"
+          },
+          {
+            "name": "days",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 30
+            },
+            "description": "عدد الأيام للتقرير"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ملف التقرير المصدر",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportResponseSchema"
+                }
+              },
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "نوع التصدير غير مدعوم",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/schedules": {
+      "get": {
+        "tags": [
+          "Report Scheduling"
+        ],
+        "summary": "جلب جداول التقارير",
+        "description": "جلب قائمة جميع جداول التقارير المكونة",
+        "security": [
+          {
+            "session_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "قائمة الجداول",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "schedules": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ScheduleResponseSchema"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Report Scheduling"
+        ],
+        "summary": "إنشاء جدول تقرير جديد",
+        "description": "إنشاء جدول دوري جديد للتقارير",
+        "security": [
+          {
+            "session_auth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScheduleRequestSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "تم إنشاء الجدول بنجاح",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "schedule_id": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/schedules/{schedule_id}": {
+      "delete": {
+        "tags": [
+          "Report Scheduling"
+        ],
+        "summary": "حذف جدول تقرير",
+        "description": "حذف جدول تقرير دوري",
+        "security": [
+          {
+            "session_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "schedule_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "معرف الجدول"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "تم حذف الجدول بنجاح",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "openapi": "3.0.0",
+  "components": {
+    "schemas": {
+      "DeviceInfoSchema": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "type": "string",
+            "example": "iPhone 14 Pro",
+            "description": "نموذج الجهاز"
+          },
+          "ios": {
+            "type": "string",
+            "example": "17.1",
+            "description": "إصدار iOS"
+          },
+          "serial": {
+            "type": "string",
+            "example": "SN123456789",
+            "description": "الرقم التسلسلي"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ActivationRequestSchema": {
+        "type": "object",
+        "properties": {
+          "serial_number": {
+            "type": "string",
+            "example": "SN123456789",
+            "description": "الرقم التسلسلي للجهاز"
+          },
+          "device_info": {
+            "description": "معلومات الجهاز",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DeviceInfoSchema"
+              }
+            ]
+          },
+          "activation_type": {
+            "type": "string",
+            "example": "premium",
+            "description": "نوع التفعيل"
+          }
+        },
+        "required": [
+          "serial_number"
+        ],
+        "additionalProperties": false
+      },
+      "ActivationResponseSchema": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true,
+            "description": "حالة التفعيل"
+          },
+          "message": {
+            "type": "string",
+            "example": "تم التفعيل بنجاح",
+            "description": "رسالة التفعيل"
+          },
+          "activation_id": {
+            "type": "integer",
+            "example": 12345,
+            "description": "معرف التفعيل"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "وقت التفعيل"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginRequestSchema": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "admin",
+            "description": "اسم المستخدم"
+          },
+          "password": {
+            "type": "string",
+            "example": "password123",
+            "description": "كلمة المرور"
+          },
+          "totp_code": {
+            "type": "string",
+            "example": "123456",
+            "description": "رمز التوثيق الثنائي"
+          }
+        },
+        "required": [
+          "password",
+          "username"
+        ],
+        "additionalProperties": false
+      },
+      "LoginResponseSchema": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true,
+            "description": "حالة تسجيل الدخول"
+          },
+          "message": {
+            "type": "string",
+            "example": "تم تسجيل الدخول بنجاح",
+            "description": "رسالة النتيجة"
+          },
+          "requires_2fa": {
+            "type": "boolean",
+            "example": false,
+            "description": "يتطلب توثيق ثنائي"
+          },
+          "qr_code": {
+            "type": "string",
+            "description": "كود QR للتوثيق الثنائي (base64)"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReportRequestSchema": {
+        "type": "object",
+        "properties": {
+          "days": {
+            "type": "integer",
+            "example": 30,
+            "description": "عدد الأيام للتقرير"
+          },
+          "report_type": {
+            "type": "string",
+            "enum": [
+              "comprehensive",
+              "activation",
+              "security",
+              "revenue"
+            ],
+            "example": "comprehensive",
+            "description": "نوع التقرير"
+          },
+          "include_charts": {
+            "type": "boolean",
+            "example": true,
+            "description": "تضمين الرسوم البيانية"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReportResponseSchema": {
+        "type": "object",
+        "properties": {
+          "metadata": {
+            "type": "object",
+            "description": "معلومات التقرير",
+            "additionalProperties": {}
+          },
+          "activation_statistics": {
+            "type": "object",
+            "description": "إحصائيات التفعيلات",
+            "additionalProperties": {}
+          },
+          "security_report": {
+            "type": "object",
+            "description": "تقرير الأمان",
+            "additionalProperties": {}
+          },
+          "revenue_analytics": {
+            "type": "object",
+            "description": "تحليل الإيرادات",
+            "additionalProperties": {}
+          },
+          "charts": {
+            "type": "object",
+            "description": "الرسوم البيانية (base64)",
+            "additionalProperties": {}
+          }
+        },
+        "additionalProperties": false
+      },
+      "ScheduleRequestSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "تقرير أسبوعي",
+            "description": "اسم الجدول"
+          },
+          "frequency": {
+            "type": "string",
+            "enum": [
+              "daily",
+              "weekly",
+              "monthly"
+            ],
+            "example": "weekly",
+            "description": "تكرار الجدول"
+          },
+          "days": {
+            "type": "integer",
+            "example": 7,
+            "description": "عدد الأيام للتقرير"
+          },
+          "format_type": {
+            "type": "string",
+            "enum": [
+              "pdf",
+              "json",
+              "excel"
+            ],
+            "example": "pdf",
+            "description": "صيغة التقرير"
+          },
+          "email_recipients": {
+            "type": "array",
+            "description": "قائمة البريد الإلكتروني للمستلمين",
+            "items": {
+              "type": "string",
+              "format": "email"
+            }
+          }
+        },
+        "required": [
+          "frequency",
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "ScheduleResponseSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1,
+            "description": "معرف الجدول"
+          },
+          "name": {
+            "type": "string",
+            "example": "تقرير أسبوعي",
+            "description": "اسم الجدول"
+          },
+          "frequency": {
+            "type": "string",
+            "example": "weekly",
+            "description": "تكرار الجدول"
+          },
+          "days": {
+            "type": "integer",
+            "example": 7,
+            "description": "عدد الأيام"
+          },
+          "format_type": {
+            "type": "string",
+            "example": "pdf",
+            "description": "صيغة التقرير"
+          },
+          "last_run": {
+            "type": "string",
+            "format": "date-time",
+            "description": "آخر تشغيل"
+          },
+          "active": {
+            "type": "boolean",
+            "example": true,
+            "description": "حالة النشاط"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ErrorResponseSchema": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "خطأ في الطلب",
+            "description": "رسالة الخطأ"
+          },
+          "code": {
+            "type": "string",
+            "example": "INVALID_REQUEST",
+            "description": "رمز الخطأ"
+          },
+          "details": {
+            "type": "object",
+            "description": "تفاصيل إضافية",
+            "additionalProperties": {}
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "session_auth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "session",
+        "description": "Session-based authentication using Flask sessions"
+      },
+      "admin_auth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "Admin authentication with username/password"
+      }
+    }
+  }
+}

@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 توثيق API | RiF Activator A12+</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            --success-gradient: linear-gradient(135deg, #00C9FF 0%, #92FE9D 100%);
+            --danger-gradient: linear-gradient(135deg, #FC466B 0%, #3F5EFB 100%);
+            --warning-gradient: linear-gradient(135deg, #FDBB2D 0%, #22C1C3 100%);
+            --info-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --shadow-light: 0 8px 32px rgba(31, 38, 135, 0.37);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--text-primary);
+        }
+
+        .header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-primary);
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: #4CAF50;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .nav-link.active {
+            background: var(--secondary-gradient);
+            color: white;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        .sidebar-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-light);
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar-links {
+            list-style: none;
+        }
+
+        .sidebar-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-links a:hover, .sidebar-links a.active {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+
+        .content {
+            min-height: calc(100vh - 150px);
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-light);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+            color: #4CAF50;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .endpoint {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .endpoint:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .endpoint-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .method-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .method-post { background: var(--secondary-gradient); color: white; }
+        .method-get { background: var(--info-gradient); color: white; }
+        .method-put { background: var(--warning-gradient); color: white; }
+        .method-delete { background: var(--danger-gradient); color: white; }
+
+        .endpoint-path {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .endpoint-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 1rem;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .tab.active {
+            color: #4CAF50;
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .parameter {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .parameter-name {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: #4CAF50;
+            margin-bottom: 0.3rem;
+        }
+
+        .parameter-type {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .parameter-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .action-icon {
+            font-size: 2.5rem;
+            color: #4CAF50;
+            margin-bottom: 1rem;
+        }
+
+        .action-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .action-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: none;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .endpoint-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="/" class="logo">
+                <i class="fas fa-book"></i>
+                <span>RiF Activator A12+</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">الرئيسية</a>
+                <a href="/check_device" class="nav-link">فحص الجهاز</a>
+                <a href="/api/docs" class="nav-link active">التوثيق</a>
+                <a href="/admin" class="nav-link">لوحة التحكم</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">
+                    <i class="fas fa-list"></i>
+                    المحتويات
+                </h3>
+                <ul class="sidebar-links">
+                    <li><a href="#overview" class="sidebar-link">نظرة عامة</a></li>
+                    <li><a href="#authentication" class="sidebar-link">المصادقة</a></li>
+                    <li><a href="#activation" class="sidebar-link">تفعيل الأجهزة</a></li>
+                    <li><a href="#device-check" class="sidebar-link">فحص الأجهزة</a></li>
+                    <li><a href="#payments" class="sidebar-link">المدفوعات</a></li>
+                    <li><a href="#admin" class="sidebar-link">الإدارة</a></li>
+                    <li><a href="#examples" class="sidebar-link">أمثلة</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">
+                    <i class="fas fa-download"></i>
+                    التحميلات
+                </h3>
+                <ul class="sidebar-links">
+                    <li><a href="/api/docs/openapi.json">OpenAPI Spec</a></li>
+                    <li><a href="/api/docs/postman">Postman Collection</a></li>
+                    <li><a href="#" onclick="downloadSDK()">SDK Libraries</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="content">
+            <section class="page-header">
+                <h1 class="page-title">📚 توثيق API</h1>
+                <p class="page-subtitle">دليل شامل لاستخدام واجهات برمجة التطبيقات</p>
+            </section>
+
+            <div class="quick-actions">
+                <a href="#examples" class="action-card">
+                    <i class="fas fa-code action-icon"></i>
+                    <div class="action-title">أمثلة سريعة</div>
+                    <div class="action-description">أمثلة عملية للاستخدام</div>
+                </a>
+
+                <a href="/api/docs/postman" class="action-card">
+                    <i class="fas fa-rocket action-icon"></i>
+                    <div class="action-title">Postman Collection</div>
+                    <div class="action-description">مجموعة جاهزة للاختبار</div>
+                </a>
+
+                <a href="#authentication" class="action-card">
+                    <i class="fas fa-key action-icon"></i>
+                    <div class="action-title">مفاتيح API</div>
+                    <div class="action-description">كيفية الحصول على المفاتيح</div>
+                </a>
+
+                <a href="/api/health" class="action-card">
+                    <i class="fas fa-heartbeat action-icon"></i>
+                    <div class="action-title">حالة النظام</div>
+                    <div class="action-description">فحص حالة الخدمات</div>
+                </a>
+            </div>
+
+            <section id="overview" class="section">
+                <div class="section-header">
+                    <i class="fas fa-info-circle section-icon"></i>
+                    <h2 class="section-title">نظرة عامة</h2>
+                </div>
+                
+                <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem;">
+                    مرحباً بك في توثيق RiF Activator A12+ API. هذا النظام يوفر واجهات برمجية قوية وآمنة 
+                    لإدارة تفعيل أجهزة iOS والتحقق من حالة الأجهزة ومعالجة المدفوعات.
+                </p>
+
+                <div style="background: rgba(76, 175, 80, 0.1); border: 1px solid rgba(76, 175, 80, 0.3); border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0;">
+                    <h4 style="color: #4CAF50; margin-bottom: 0.5rem;">🚀 الميزات الرئيسية</h4>
+                    <ul style="color: var(--text-secondary); padding-right: 1.5rem; line-height: 1.6;">
+                        <li>تفعيل آمن لأجهزة iOS</li>
+                        <li>فحص حالة الأجهزة بالرقم التسلسلي</li>
+                        <li>معالجة المدفوعات والتحقق التلقائي</li>
+                        <li>لوحة إدارة شاملة</li>
+                        <li>تقارير وإحصائيات مفصلة</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Base URL
+https://your-domain.com/api
+
+# API Version
+v1.0
+
+# Response Format
+JSON</code></pre>
+                </div>
+            </section>
+
+            <section id="authentication" class="section">
+                <div class="section-header">
+                    <i class="fas fa-shield-alt section-icon"></i>
+                    <h2 class="section-title">المصادقة</h2>
+                </div>
+
+                <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem;">
+                    يستخدم النظام مفاتيح API للمصادقة. يجب تضمين مفتاح API في header الطلب.
+                </p>
+
+                <div class="tabs">
+                    <button class="tab active" onclick="switchTab('auth-curl')">cURL</button>
+                    <button class="tab" onclick="switchTab('auth-javascript')">JavaScript</button>
+                    <button class="tab" onclick="switchTab('auth-python')">Python</button>
+                </div>
+
+                <div class="tab-content active" id="auth-curl">
+                    <div class="code-block">
+                        <pre><code class="language-bash">curl -X POST "https://your-domain.com/api/pay_register" \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: your_api_key_here" \
+  -d '{"serial": "C8KV7Q2PH72Y"}'</code></pre>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="auth-javascript">
+                    <div class="code-block">
+                        <pre><code class="language-javascript">const response = await fetch('https://your-domain.com/api/pay_register', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-API-Key': 'your_api_key_here'
+  },
+  body: JSON.stringify({
+    serial: 'C8KV7Q2PH72Y'
+  })
+});
+
+const result = await response.json();</code></pre>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="auth-python">
+                    <div class="code-block">
+                        <pre><code class="language-python">import requests
+
+url = "https://your-domain.com/api/pay_register"
+headers = {
+    "Content-Type": "application/json",
+    "X-API-Key": "your_api_key_here"
+}
+data = {"serial": "C8KV7Q2PH72Y"}
+
+response = requests.post(url, headers=headers, json=data)
+result = response.json()</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section id="activation" class="section">
+                <div class="section-header">
+                    <i class="fas fa-mobile-alt section-icon"></i>
+                    <h2 class="section-title">تفعيل الأجهزة</h2>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="endpoint-path">/api/pay_register</span>
+                    </div>
+                    <p class="endpoint-description">
+                        تسجيل رقم تسلسلي جديد في قاعدة البيانات للتفعيل
+                    </p>
+
+                    <h4 style="color: var(--text-primary); margin: 1.5rem 0 1rem 0;">Parameters</h4>
+                    <div class="parameter">
+                        <div class="parameter-name">
+                            serial
+                            <span class="parameter-type">string</span>
+                        </div>
+                        <div class="parameter-description">
+                            الرقم التسلسلي للجهاز (مطلوب)
+                        </div>
+                    </div>
+
+                    <div class="parameter">
+                        <div class="parameter-name">
+                            api_key
+                            <span class="parameter-type">string</span>
+                        </div>
+                        <div class="parameter-description">
+                            مفتاح API للمصادقة (اختياري إذا كان في header)
+                        </div>
+                    </div>
+
+                    <h4 style="color: var(--text-primary); margin: 1.5rem 0 1rem 0;">Response</h4>
+                    <div class="code-block">
+                        <pre><code class="language-json">{
+  "success": true,
+  "message": "تم تسجيل الجهاز بنجاح",
+  "serial": "C8KV7Q2PH72Y",
+  "timestamp": "2023-12-01T10:30:00Z"
+}</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section id="device-check" class="section">
+                <div class="section-header">
+                    <i class="fas fa-search section-icon"></i>
+                    <h2 class="section-title">فحص الأجهزة</h2>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="endpoint-path">/api/check_serial</span>
+                    </div>
+                    <p class="endpoint-description">
+                        التحقق من وجود رقم تسلسلي في قاعدة البيانات
+                    </p>
+
+                    <h4 style="color: var(--text-primary); margin: 1.5rem 0 1rem 0;">Parameters</h4>
+                    <div class="parameter">
+                        <div class="parameter-name">
+                            serial
+                            <span class="parameter-type">string</span>
+                        </div>
+                        <div class="parameter-description">
+                            الرقم التسلسلي المراد فحصه (مطلوب)
+                        </div>
+                    </div>
+
+                    <h4 style="color: var(--text-primary); margin: 1.5rem 0 1rem 0;">Response</h4>
+                    <div class="code-block">
+                        <pre><code class="language-json">{
+  "registered": true,
+  "serial": "C8KV7Q2PH72Y",
+  "registration_date": "2023-12-01T10:30:00Z"
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="endpoint-path">/api/list_serials</span>
+                    </div>
+                    <p class="endpoint-description">
+                        الحصول على قائمة بجميع الأرقام التسلسلية المسجلة
+                    </p>
+
+                    <h4 style="color: var(--text-primary); margin: 1.5rem 0 1rem 0;">Response</h4>
+                    <div class="code-block">
+                        <pre><code class="language-json">{
+  "serials": [
+    {
+      "serial": "C8KV7Q2PH72Y",
+      "timestamp": "2023-12-01T10:30:00Z"
+    },
+    {
+      "serial": "F2LV8R3NK45M",
+      "timestamp": "2023-12-01T11:15:00Z"
+    }
+  ],
+  "count": 2
+}</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section id="examples" class="section">
+                <div class="section-header">
+                    <i class="fas fa-code section-icon"></i>
+                    <h2 class="section-title">أمثلة عملية</h2>
+                </div>
+
+                <h3 style="color: var(--text-primary); margin-bottom: 1rem;">مثال شامل - تفعيل جهاز</h3>
+                
+                <div class="tabs">
+                    <button class="tab active" onclick="switchTab('example-javascript')">JavaScript</button>
+                    <button class="tab" onclick="switchTab('example-python')">Python</button>
+                    <button class="tab" onclick="switchTab('example-php')">PHP</button>
+                </div>
+
+                <div class="tab-content active" id="example-javascript">
+                    <div class="code-block">
+                        <pre><code class="language-javascript">// تفعيل جهاز جديد
+async function activateDevice(serial, apiKey) {
+  try {
+    const response = await fetch('https://your-domain.com/api/pay_register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': apiKey
+      },
+      body: JSON.stringify({ serial: serial })
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      console.log(`تم تفعيل الجهاز: ${result.serial}`);
+      
+      // فحص حالة التفعيل
+      const checkResponse = await fetch('https://your-domain.com/api/check_serial', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ serial: serial })
+      });
+      
+      const checkResult = await checkResponse.json();
+      console.log('حالة الجهاز:', checkResult.registered ? 'مفعل' : 'غير مفعل');
+    }
+  } catch (error) {
+    console.error('خطأ في التفعيل:', error);
+  }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="example-python">
+                    <div class="code-block">
+                        <pre><code class="language-python">import requests
+import json
+
+def activate_device(serial, api_key):
+    """تفعيل جهاز جديد"""
+    
+    # تفعيل الجهاز
+    activation_url = "https://your-domain.com/api/pay_register"
+    headers = {
+        "Content-Type": "application/json",
+        "X-API-Key": api_key
+    }
+    data = {"serial": serial}
+    
+    try:
+        response = requests.post(activation_url, headers=headers, json=data)
+        result = response.json()
+        
+        if result.get('success'):
+            print(f"تم تفعيل الجهاز: {result['serial']}")
+            
+            # فحص حالة التفعيل
+            check_url = "https://your-domain.com/api/check_serial"
+            check_data = {"serial": serial}
+            
+            check_response = requests.post(check_url, json=check_data)
+            check_result = check_response.json()
+            
+            status = "مفعل" if check_result.get('registered') else "غير مفعل"
+            print(f"حالة الجهاز: {status}")
+            
+        return result
+    
+    except requests.RequestException as e:
+        print(f"خطأ في التفعيل: {e}")
+        return None
+
+# استخدام الدالة
+activate_device("C8KV7Q2PH72Y", "your_api_key_here")</code></pre>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="example-php">
+                    <div class="code-block">
+                        <pre><code class="language-php"><?php
+function activateDevice($serial, $apiKey) {
+    $activationUrl = 'https://your-domain.com/api/pay_register';
+    
+    $data = json_encode(['serial' => $serial]);
+    
+    $options = [
+        'http' => [
+            'header' => [
+                "Content-Type: application/json",
+                "X-API-Key: $apiKey"
+            ],
+            'method' => 'POST',
+            'content' => $data
+        ]
+    ];
+    
+    $context = stream_context_create($options);
+    $response = file_get_contents($activationUrl, false, $context);
+    $result = json_decode($response, true);
+    
+    if ($result['success']) {
+        echo "تم تفعيل الجهاز: " . $result['serial'] . "\n";
+        
+        // فحص حالة التفعيل
+        $checkUrl = 'https://your-domain.com/api/check_serial';
+        $checkData = json_encode(['serial' => $serial]);
+        
+        $checkOptions = [
+            'http' => [
+                'header' => "Content-Type: application/json",
+                'method' => 'POST',
+                'content' => $checkData
+            ]
+        ];
+        
+        $checkContext = stream_context_create($checkOptions);
+        $checkResponse = file_get_contents($checkUrl, false, $checkContext);
+        $checkResult = json_decode($checkResponse, true);
+        
+        $status = $checkResult['registered'] ? 'مفعل' : 'غير مفعل';
+        echo "حالة الجهاز: $status\n";
+    }
+    
+    return $result;
+}
+
+// استخدام الدالة
+activateDevice("C8KV7Q2PH72Y", "your_api_key_here");
+?></code></pre>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function switchTab(targetTab) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show target tab content
+            document.getElementById(targetTab).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function downloadSDK() {
+            alert('SDK Libraries - ستتوفر قريباً');
+        }
+
+        // Smooth scrolling for sidebar links
+        document.querySelectorAll('.sidebar-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Update active link
+                    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Highlight current section in sidebar
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section');
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.pageYOffset >= sectionTop - 100) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            sidebarLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

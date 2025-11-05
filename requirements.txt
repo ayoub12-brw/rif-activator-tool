@@ -1,0 +1,55 @@
+# Core Flask Application
+Flask>=3.0.0
+Flask-SocketIO>=5.3.0
+Werkzeug>=3.0.0
+
+# Database and Storage
+sqlite3
+
+# HTTP Client and Server
+requests>=2.31.0
+waitress>=2.2.0
+eventlet>=0.33.0
+
+# Security and Authentication  
+PyJWT>=2.8.0
+bcrypt>=4.0.0
+python-dotenv>=1.0.0
+
+# System and Process Management
+psutil>=5.9.0
+
+# GUI Framework (for desktop app)
+PyQt5>=5.15.0
+# Alternative: PySide6>=6.5.0
+
+# Image Processing (for QR codes, etc)
+Pillow>=10.0.0
+qrcode>=7.4.0
+
+# Two-Factor Authentication
+pyotp>=2.9.0
+
+# Data Analysis and Visualization
+pandas>=2.1.0
+numpy>=1.24.0
+matplotlib>=3.8.0
+seaborn>=0.13.0
+plotly>=5.15.0
+
+# Report Generation
+fpdf2>=2.7.0
+openpyxl>=3.1.0
+
+# Development and Testing (optional)
+pytest>=7.0.0
+black>=23.0.0
+flake8>=6.0.0
+bandit>=1.7.0
+arabic-reshaper==3.0.0
+python-bidi==0.4.2
+schedule==1.2.0
+APScheduler==3.10.4
+flask-swagger-ui==4.11.1
+apispec==6.3.0
+marshmallow==3.20.1

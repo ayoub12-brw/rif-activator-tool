@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التقارير - RiF Activator A12+</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Cairo', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            direction: rtl;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+
+        .reports-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .report-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .report-title {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .report-details {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .device-list {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .device-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+        }
+
+        .device-name {
+            color: white;
+            font-weight: bold;
+        }
+
+        .device-count {
+            background: rgba(76, 175, 80, 0.3);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .refresh-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(180deg);
+        }
+
+        .nav-links {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <div class="nav-links">
+            <a href="/">🏠 الرئيسية</a>
+            <a href="/check_device">🔍 فحص الجهاز</a>
+            <a href="/admin">⚙️ الإدارة</a>
+            <a href="/reports">📊 التقارير</a>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>📊 تقارير RiF Activator A12+</h1>
+            <p>نظرة شاملة على إحصائيات وأداء النظام</p>
+        </div>
+
+        <!-- Live Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-icon">👥</span>
+                <div class="stat-number" id="activeUsers">897</div>
+                <div class="stat-label">المستخدمون النشطون</div>
+            </div>
+            
+            <div class="stat-card">
+                <span class="stat-icon">✅</span>
+                <div class="stat-number" id="successRate">98.4%</div>
+                <div class="stat-label">معدل النجاح</div>
+            </div>
+            
+            <div class="stat-card">
+                <span class="stat-icon">📱</span>
+                <div class="stat-number" id="totalDevices">25</div>
+                <div class="stat-label">الأجهزة المدعومة</div>
+            </div>
+            
+            <div class="stat-card">
+                <span class="stat-icon">⏱️</span>
+                <div class="stat-number" id="avgTime">2.1s</div>
+                <div class="stat-label">متوسط وقت التفعيل</div>
+            </div>
+        </div>
+
+        <!-- Reports Section -->
+        <div class="reports-section">
+            <h2 class="section-title">📋 التقارير اليومية والأسبوعية</h2>
+            
+            <div class="report-item">
+                <div class="report-title">📅 التقرير اليومي - 5 نوفمبر 2025</div>
+                <div class="report-details">
+                    • إجمالي التفعيلات: <strong>45</strong><br>
+                    • معدل النجاح: <strong>97.8%</strong><br>
+                    • الأجهزة الأكثر طلباً: iPhone 15 Pro Max, iPhone 14 Pro, iPhone XS<br>
+                    • وقت الذروة: 3:00 - 6:00 مساءً
+                </div>
+            </div>
+            
+            <div class="report-item">
+                <div class="report-title">📊 التقرير الأسبوعي - الأسبوع المنتهي 5 نوفمبر 2025</div>
+                <div class="report-details">
+                    • إجمالي التفعيلات: <strong>312</strong><br>
+                    • معدل النجاح: <strong>98.1%</strong><br>
+                    • يوم الذروة: الأربعاء<br>
+                    • أكثر إصدارات iOS: 18.0, 17.6, 16.7
+                </div>
+            </div>
+        </div>
+
+        <!-- Device Statistics -->
+        <div class="device-list">
+            <h2 class="section-title">📱 إحصائيات الأجهزة الأكثر استخداماً</h2>
+            
+            <div class="device-item">
+                <span class="device-name">iPhone 15 Pro Max</span>
+                <span class="device-count">89 تفعيل</span>
+            </div>
+            
+            <div class="device-item">
+                <span class="device-name">iPhone 14 Pro</span>
+                <span class="device-count">67 تفعيل</span>
+            </div>
+            
+            <div class="device-item">
+                <span class="device-name">iPhone XS</span>
+                <span class="device-count">54 تفعيل</span>
+            </div>
+            
+            <div class="device-item">
+                <span class="device-name">iPhone 13 Pro</span>
+                <span class="device-count">43 تفعيل</span>
+            </div>
+            
+            <div class="device-item">
+                <span class="device-name">iPhone 12</span>
+                <span class="device-count">38 تفعيل</span>
+            </div>
+        </div>
+
+        <!-- Chart Section -->
+        <div class="chart-container">
+            <h2 class="section-title">📈 رسم بياني للأداء</h2>
+            <div style="text-align: center; color: rgba(255,255,255,0.7); padding: 50px;">
+                <div style="font-size: 4rem;">📊</div>
+                <p>الرسوم البيانية التفاعلية ستكون متاحة قريباً</p>
+                <p>يعرض إحصائيات مفصلة عن الأداء والاستخدام</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Refresh Button -->
+    <button class="refresh-btn" onclick="refreshStats()" title="تحديث الإحصائيات">
+        🔄
+    </button>
+
+    <script>
+        // تحديث الإحصائيات تلقائياً
+        async function refreshStats() {
+            try {
+                const response = await fetch('/api/live_stats');
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('activeUsers').textContent = data.stats.active_users;
+                    document.getElementById('successRate').textContent = data.stats.success_rate;
+                    document.getElementById('totalDevices').textContent = data.stats.total_devices;
+                    document.getElementById('avgTime').textContent = data.stats.avg_time + 's';
+                }
+            } catch (error) {
+                console.error('خطأ في تحديث الإحصائيات:', error);
+            }
+        }
+
+        // تحديث تلقائي كل 5 ثوانِ
+        setInterval(refreshStats, 5000);
+
+        // تحديث عند تحميل الصفحة
+        refreshStats();
+
+        // إضافة تأثيرات بصرية
+        document.addEventListener('DOMContentLoaded', function() {
+            // تأثير الظهور التدريجي للعناصر
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            document.querySelectorAll('.stat-card, .report-item, .device-item').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

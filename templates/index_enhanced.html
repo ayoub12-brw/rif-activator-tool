@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiF Activator A12+ | نظام تفعيل الأجهزة المتقدم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --shadow-light: 0 8px 32px rgba(31, 38, 135, 0.37);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: #4CAF50;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .nav-link.active {
+            background: var(--secondary-gradient);
+            color: white;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 4rem 0;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            display: block;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        .activation-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow-light);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .activation-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            display: block;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(76, 175, 80, 0.8);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .btn-primary {
+            background: var(--secondary-gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0 auto;
+            min-width: 200px;
+            justify-content: center;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(76, 175, 80, 0.4);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #4CAF50;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            background: var(--glass-bg);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+            color: white;
+        }
+
+        .message {
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .message.success {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(69, 160, 73, 0.2));
+            color: #4CAF50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .message.error {
+            background: linear-gradient(135deg, rgba(244, 67, 54, 0.2), rgba(229, 57, 53, 0.2));
+            color: #f44336;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: white;
+            margin-top: 1rem;
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .main-container {
+                padding: 1rem;
+            }
+
+            .activation-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="/" class="logo">
+                <i class="fas fa-mobile-alt"></i>
+                <span>RiF Activator A12+</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link active">الرئيسية</a>
+                <a href="/check_device" class="nav-link">فحص الجهاز</a>
+                <a href="/api/docs" class="nav-link">التوثيق</a>
+                <a href="/admin" class="nav-link">لوحة التحكم</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-container">
+<header class="hero text-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1 class="display-6">Welcome to<br><strong>RIF ACTIVATOR</strong></h1>
+                <p class="lead muted">Advanced and reliable iCloud Bypass Software. Easy to use, powerful, and designed for everyone.</p>
+                <div class="mt-4">
+                    <a class="btn btn-lg btn-primary me-2" href="#">DOWNLOAD NOW</a>
+                    <a class="btn btn-lg btn-outline-light" href="#">Join the community</a>
+                </div>
+                <p class="mt-4"><small class="muted">Logo de RIF Activator</small></p>
+            </div>
+            <div class="col-lg-5">
+                <div class="card card-dark p-3">
+                    <h5>Our Services</h5>
+                    <p class="muted">We offer professional plans to activate, analyze, and manage your no-signal devices with full support and advanced features.</p>
+                    <h6 class="mt-3">POPULAR</h6>
+                    <h5>A12+ No Signal – Untethered</h5>
+                    <p class="muted mb-1"><strong>Supported iPhone Models:</strong><br>XR to 16 Pro Max</p>
+                    <p class="muted mb-1"><strong>Supported Firmware:</strong><br>18.7–26.0.1</p>
+                    <p class="mb-0"><strong>24/7 Priority Support</strong><br><small class="muted">Get help when you need it</small></p>
+                    <div class="mt-3">
+                        <a class="btn btn-sm btn-success" href="/home">Start now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container my-5 text-center">
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <div class="card card-dark p-5">
+        <h3>Welcome</h3>
+        <p class="muted">Registration and serial management moved to the dedicated landing page.</p>
+        <a class="btn btn-lg btn-primary" href="/home">Go to RIF ACTIVATOR Home</a>
+      </div>
+    </div>
+  </div>
+</main>
+        <section class="hero-section">
+            <h1 class="hero-title">🚀 RiF Activator A12+</h1>
+            <p class="hero-subtitle">نظام تفعيل الأجهزة المتقدم والآمن - خدمة احترافية لتفعيل أجهزة iPhone و iPad</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalActivations">0</span>
+                    <span class="stat-label">جهاز مفعل</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">99.9%</span>
+                    <span class="stat-label">معدل النجاح</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">خدمة مستمرة</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="activation-section">
+            <h2 class="section-title">🎯 تفعيل جهازك الآن</h2>
+            <div id="messageArea"></div>
+            
+            <form class="activation-form" id="activationForm">
+                <div class="form-group">
+                    <label class="form-label" for="serialInput">الرقم التسلسلي للجهاز</label>
+                    <input 
+                        type="text" 
+                        id="serialInput" 
+                        name="serial" 
+                        class="form-input" 
+                        placeholder="أدخل الرقم التسلسلي لجهازك (مثال: C8KV7Q2PH72Y)"
+                        required
+                    >
+                </div>
+                
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    <span>تفعيل الجهاز</span>
+                </button>
+            </form>
+            
+            <div class="loading" id="loadingIndicator">
+                <i class="fas fa-spinner"></i>
+                <p>جاري معالجة طلب التفعيل...</p>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <h2 class="section-title">✨ مزايا النظام</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">أمان عالي</h3>
+                    <p class="feature-description">تشفير متقدم وحماية شاملة للبيانات مع نظام مصادقة ثنائي</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">سرعة فائقة</h3>
+                    <p class="feature-description">تفعيل فوري للأجهزة خلال ثوانٍ معدودة مع ضمان الاستقرار</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">دعم شامل</h3>
+                    <p class="feature-description">يدعم جميع أجهزة iPhone و iPad مع آخر إصدارات iOS</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3 class="feature-title">متاح عالمياً</h3>
+                    <p class="feature-description">خدمة متوفرة على مدار الساعة في جميع أنحاء العالم</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="activation-section">
+            <h2 class="section-title">🔗 روابط سريعة</h2>
+            <div class="action-buttons">
+                <a href="/check_device" class="action-btn">
+                    <i class="fas fa-search"></i>
+                    فحص حالة الجهاز
+                </a>
+                <a href="/admin" class="action-btn">
+                    <i class="fas fa-cog"></i>
+                    لوحة الإدارة
+                </a>
+                <a href="/api/docs" class="action-btn">
+                    <i class="fas fa-book"></i>
+                    توثيق API
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const activationForm = document.getElementById('activationForm');
+        const serialInput = document.getElementById('serialInput');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const messageArea = document.getElementById('messageArea');
+        const totalActivationsElement = document.getElementById('totalActivations');
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStats();
+        });
+
+        activationForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const serial = serialInput.value.trim().toUpperCase();
+            
+            if (!serial) {
+                showMessage('يرجى إدخال الرقم التسلسلي', 'error');
+                return;
+            }
+
+            if (serial.length < 8) {
+                showMessage('الرقم التسلسلي يجب أن يكون أطول من 8 أحرف', 'error');
+                return;
+            }
+
+            try {
+                showLoading(true);
+                clearMessage();
+                
+                const response = await fetch('/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ serial: serial })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage(`🎉 تم تفعيل الجهاز بنجاح! الرقم التسلسلي: ${data.serial}`, 'success');
+                    serialInput.value = '';
+                    loadStats();
+                } else {
+                    showMessage(`⚠️ الجهاز مفعل مسبقاً أو حدث خطأ. الرقم التسلسلي: ${data.serial}`, 'error');
+                }
+            } catch (error) {
+                showMessage('❌ حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.', 'error');
+                console.error('Error:', error);
+            } finally {
+                showLoading(false);
+            }
+        });
+
+        serialInput.addEventListener('input', function(e) {
+            let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+            e.target.value = value;
+        });
+
+        function showMessage(message, type) {
+            messageArea.innerHTML = `<div class="message ${type}">${message}</div>`;
+            setTimeout(() => {
+                messageArea.innerHTML = '';
+            }, 5000);
+        }
+
+        function clearMessage() {
+            messageArea.innerHTML = '';
+        }
+
+        function showLoading(show) {
+            loadingIndicator.style.display = show ? 'block' : 'none';
+            activationForm.querySelector('button').disabled = show;
+        }
+
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/list_serials');
+                const data = await response.json();
+                if (data.serials) {
+                    animateNumber(totalActivationsElement, data.serials.length);
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        function animateNumber(element, targetNumber) {
+            const duration = 2000;
+            const step = targetNumber / (duration / 16);
+            let current = 0;
+            
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= targetNumber) {
+                    element.textContent = targetNumber;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 16);
+        }
+    </script>
+</body>
+</html>

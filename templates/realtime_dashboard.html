@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم الفورية - RiF Activator A12+</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            --dark-bg: #0f0f23;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-light: rgba(255, 255, 255, 0.9);
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%);
+            animation: floatingGradient 20s ease-in-out infinite alternate;
+        }
+        
+        @keyframes floatingGradient {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-30px, -30px) rotate(15deg); }
+        }
+        
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 15px 40px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(102, 126, 234, 0.2);
+        }
+        
+        /* Header */
+        .dashboard-header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-connected { background: #00f5a0; }
+        .status-disconnected { background: #ff6b6b; }
+        .status-connecting { background: #ffa502; }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+        
+        /* Stats Cards */
+        .stat-card {
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-icon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+        
+        /* Progress Bars */
+        .progress-custom {
+            height: 8px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .progress-bar-custom {
+            height: 100%;
+            border-radius: 10px;
+            transition: all 0.5s ease;
+            position: relative;
+        }
+        
+        .progress-bar-custom.success {
+            background: var(--success-gradient);
+        }
+        
+        .progress-bar-custom.warning {
+            background: var(--warning-gradient);
+        }
+        
+        .progress-bar-custom.danger {
+            background: var(--danger-gradient);
+        }
+        
+        .progress-bar-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: progressShine 2s ease-in-out infinite;
+        }
+        
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Real-time Activity Feed */
+        .activity-feed {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+            animation: slideInRight 0.5s ease;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .activity-item.success { border-left-color: #00f5a0; }
+        .activity-item.warning { border-left-color: #ffa502; }
+        .activity-item.error { border-left-color: #ff6b6b; }
+        .activity-item.info { border-left-color: #3498db; }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .activity-icon.success { background: rgba(0, 245, 160, 0.2); color: #00f5a0; }
+        .activity-icon.warning { background: rgba(255, 165, 2, 0.2); color: #ffa502; }
+        .activity-icon.error { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; }
+        .activity-icon.info { background: rgba(52, 152, 219, 0.2); color: #3498db; }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .activity-message {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.25rem;
+        }
+        
+        .activity-time {
+            font-size: 0.75rem;
+            opacity: 0.6;
+        }
+        
+        /* System Health Panel */
+        .health-panel {
+            padding: 1.5rem;
+        }
+        
+        .health-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .metric-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .metric-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+        
+        .metric-value {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        /* Notifications Panel */
+        .notification-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .notification-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+        
+        /* Chart Container */
+        .chart-container {
+            padding: 1.5rem;
+            height: 300px;
+            position: relative;
+        }
+        
+        .chart-placeholder {
+            width: 100%;
+            height: 100%;
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .stat-value { font-size: 2rem; }
+            .activity-feed { max-height: 300px; }
+            .fab { bottom: 1rem; right: 1rem; width: 50px; height: 50px; }
+        }
+        
+        /* Connection status indicator */
+        .connection-indicator {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            font-size: 0.85rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <!-- Connection Indicator -->
+    <div class="connection-indicator" id="connectionIndicator">
+        <div class="status-dot status-connecting" id="statusDot"></div>
+        <span id="statusText">جاري الاتصال...</span>
+    </div>
+    
+    <!-- Header -->
+    <div class="dashboard-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="logo">
+                        <i class="bi bi-speedometer2 me-2"></i>
+                        لوحة التحكم الفورية
+                    </div>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="connection-status">
+                        <span>الاتصالات النشطة:</span>
+                        <span class="fw-bold" id="activeConnections">0</span>
+                        <i class="bi bi-people-fill ms-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Dashboard -->
+    <div class="container-fluid mt-4">
+        <!-- Real-time Stats Row -->
+        <div class="row mb-4">
+            <div class="col-md-3 col-sm-6 mb-3">
+                <div class="glass-card stat-card">
+                    <div class="stat-icon">
+                        <i class="bi bi-cpu"></i>
+                    </div>
+                    <div class="stat-value" id="cpuUsage">0%</div>
+                    <div class="stat-label">استخدام المعالج</div>
+                    <div class="progress-custom">
+                        <div class="progress-bar-custom success" id="cpuProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-6 mb-3">
+                <div class="glass-card stat-card">
+                    <div class="stat-icon">
+                        <i class="bi bi-memory"></i>
+                    </div>
+                    <div class="stat-value" id="memoryUsage">0%</div>
+                    <div class="stat-label">استخدام الذاكرة</div>
+                    <div class="progress-custom">
+                        <div class="progress-bar-custom success" id="memoryProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-6 mb-3">
+                <div class="glass-card stat-card">
+                    <div class="stat-icon">
+                        <i class="bi bi-hdd"></i>
+                    </div>
+                    <div class="stat-value" id="diskUsage">0%</div>
+                    <div class="stat-label">استخدام القرص</div>
+                    <div class="progress-custom">
+                        <div class="progress-bar-custom success" id="diskProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-6 mb-3">
+                <div class="glass-card stat-card">
+                    <div class="stat-icon">
+                        <i class="bi bi-activity"></i>
+                    </div>
+                    <div class="stat-value" id="systemStatus">عادي</div>
+                    <div class="stat-label">حالة النظام</div>
+                    <div class="progress-custom">
+                        <div class="progress-bar-custom success" id="statusProgress" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Activity and Charts Row -->
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="glass-card mb-4">
+                    <div class="card-header bg-transparent border-0 p-3">
+                        <h5 class="mb-0">
+                            <i class="bi bi-activity text-success me-2"></i>
+                            النشاط المباشر
+                            <small class="text-muted ms-2">(تحديث فوري)</small>
+                        </h5>
+                    </div>
+                    <div class="activity-feed" id="activityFeed">
+                        <div class="text-center text-muted">
+                            <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                            جاري تحميل النشاط...
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="glass-card mb-4">
+                    <div class="card-header bg-transparent border-0 p-3">
+                        <h5 class="mb-0">
+                            <i class="bi bi-bell text-warning me-2"></i>
+                            الإشعارات الحديثة
+                        </h5>
+                    </div>
+                    <div class="activity-feed" id="notificationsFeed">
+                        <div class="text-center text-muted">
+                            <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                            جاري تحميل الإشعارات...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- System Health Row -->
+        <div class="row">
+            <div class="col-12">
+                <div class="glass-card">
+                    <div class="card-header bg-transparent border-0 p-3">
+                        <h5 class="mb-0">
+                            <i class="bi bi-shield-check text-info me-2"></i>
+                            صحة النظام التفصيلية
+                        </h5>
+                    </div>
+                    <div class="health-panel">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="health-metric">
+                                    <div class="metric-info">
+                                        <div class="metric-icon" style="background: rgba(52, 152, 219, 0.2); color: #3498db;">
+                                            <i class="bi bi-database"></i>
+                                        </div>
+                                        <div>
+                                            <div>قاعدة البيانات</div>
+                                            <small class="text-muted">الحالة والاتصال</small>
+                                        </div>
+                                    </div>
+                                    <div class="metric-value text-success" id="dbStatus">متصلة</div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div class="health-metric">
+                                    <div class="metric-info">
+                                        <div class="metric-icon" style="background: rgba(0, 245, 160, 0.2); color: #00f5a0;">
+                                            <i class="bi bi-wifi"></i>
+                                        </div>
+                                        <div>
+                                            <div>الشبكة</div>
+                                            <small class="text-muted">سرعة الاستجابة</small>
+                                        </div>
+                                    </div>
+                                    <div class="metric-value text-success" id="networkLatency">< 50ms</div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div class="health-metric">
+                                    <div class="metric-info">
+                                        <div class="metric-icon" style="background: rgba(255, 165, 2, 0.2); color: #ffa502;">
+                                            <i class="bi bi-clock"></i>
+                                        </div>
+                                        <div>
+                                            <div>وقت التشغيل</div>
+                                            <small class="text-muted">منذ آخر إعادة تشغيل</small>
+                                        </div>
+                                    </div>
+                                    <div class="metric-value text-info" id="uptime">00:00:00</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Floating Action Button -->
+    <button class="fab" onclick="refreshDashboard()" title="تحديث لوحة التحكم">
+        <i class="bi bi-arrow-clockwise"></i>
+    </button>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+    <script>
+        class RealtimeDashboard {
+            constructor() {
+                this.socket = null;
+                this.isConnected = false;
+                this.startTime = new Date();
+                this.activityCount = 0;
+                
+                this.initSocketConnection();
+                this.startUptimeCounter();
+            }
+            
+            initSocketConnection() {
+                this.socket = io();
+                
+                // Connection events
+                this.socket.on('connect', () => {
+                    this.isConnected = true;
+                    this.updateConnectionStatus('connected', 'متصل');
+                    this.socket.emit('join_admin');
+                });
+                
+                this.socket.on('disconnect', () => {
+                    this.isConnected = false;
+                    this.updateConnectionStatus('disconnected', 'منقطع');
+                });
+                
+                this.socket.on('reconnect', () => {
+                    this.updateConnectionStatus('connected', 'متصل مرة أخرى');
+                    this.socket.emit('join_admin');
+                });
+                
+                // Data events
+                this.socket.on('connected', (data) => {
+                    document.getElementById('activeConnections').textContent = data.active_connections;
+                });
+                
+                this.socket.on('live_stats', (stats) => {
+                    this.updateSystemStats(stats);
+                });
+                
+                this.socket.on('new_notification', (notification) => {
+                    this.addNotification(notification);
+                });
+                
+                this.socket.on('activity_feed', (activities) => {
+                    this.updateActivityFeed(activities);
+                });
+                
+                this.socket.on('system_alert', (alert) => {
+                    this.handleSystemAlert(alert);
+                });
+                
+                // Request initial data
+                setTimeout(() => {
+                    this.socket.emit('request_system_stats');
+                    this.socket.emit('request_activity_feed');
+                }, 1000);
+            }
+            
+            updateConnectionStatus(status, text) {
+                const indicator = document.getElementById('connectionIndicator');
+                const statusDot = document.getElementById('statusDot');
+                const statusText = document.getElementById('statusText');
+                
+                statusDot.className = `status-dot status-${status}`;
+                statusText.textContent = text;
+                
+                if (status === 'connected') {
+                    indicator.style.transform = 'translateX(0)';
+                } else {
+                    indicator.style.transform = 'translateX(-10px)';
+                }
+            }
+            
+            updateSystemStats(stats) {
+                // Update CPU
+                const cpuPercent = Math.round(stats.cpu_percent);
+                document.getElementById('cpuUsage').textContent = cpuPercent + '%';
+                this.updateProgressBar('cpuProgress', cpuPercent);
+                
+                // Update Memory
+                const memoryPercent = Math.round(stats.memory_percent);
+                document.getElementById('memoryUsage').textContent = memoryPercent + '%';
+                this.updateProgressBar('memoryProgress', memoryPercent);
+                
+                // Update Disk
+                const diskPercent = Math.round(stats.disk_percent);
+                document.getElementById('diskUsage').textContent = diskPercent + '%';
+                this.updateProgressBar('diskProgress', diskPercent);
+                
+                // Update System Status
+                this.updateSystemStatus(Math.max(cpuPercent, memoryPercent, diskPercent));
+            }
+            
+            updateProgressBar(elementId, value) {
+                const progressBar = document.getElementById(elementId);
+                progressBar.style.width = value + '%';
+                
+                // Update color based on value
+                progressBar.className = 'progress-bar-custom ';
+                if (value < 60) {
+                    progressBar.className += 'success';
+                } else if (value < 80) {
+                    progressBar.className += 'warning';
+                } else {
+                    progressBar.className += 'danger';
+                }
+            }
+            
+            updateSystemStatus(maxUsage) {
+                const statusElement = document.getElementById('systemStatus');
+                const statusProgress = document.getElementById('statusProgress');
+                
+                if (maxUsage < 60) {
+                    statusElement.textContent = 'ممتاز';
+                    statusProgress.className = 'progress-bar-custom success';
+                    statusProgress.style.width = '100%';
+                } else if (maxUsage < 80) {
+                    statusElement.textContent = 'تحذير';
+                    statusProgress.className = 'progress-bar-custom warning';
+                    statusProgress.style.width = '70%';
+                } else {
+                    statusElement.textContent = 'خطر';
+                    statusProgress.className = 'progress-bar-custom danger';
+                    statusProgress.style.width = '30%';
+                }
+            }
+            
+            updateActivityFeed(activities) {
+                const feedElement = document.getElementById('activityFeed');
+                
+                if (activities.length === 0) {
+                    feedElement.innerHTML = '<div class="text-center text-muted">لا توجد أنشطة حديثة</div>';
+                    return;
+                }
+                
+                feedElement.innerHTML = activities.map(activity => {
+                    const time = new Date(activity.timestamp).toLocaleString('ar-SA');
+                    return `
+                        <div class="activity-item ${activity.severity}">
+                            <div class="activity-icon ${activity.severity}">
+                                ${this.getActivityIcon(activity.type)}
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">${activity.title}</div>
+                                <div class="activity-message">${activity.message}</div>
+                                <div class="activity-time">${time}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            addNotification(notification) {
+                const feedElement = document.getElementById('notificationsFeed');
+                const time = new Date(notification.timestamp).toLocaleString('ar-SA');
+                
+                const notificationHtml = `
+                    <div class="notification-item">
+                        <div class="activity-icon ${notification.severity}">
+                            ${this.getActivityIcon(notification.type)}
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="fw-bold">${notification.title}</div>
+                            <div class="small text-muted">${notification.message}</div>
+                            <div class="small opacity-50">${time}</div>
+                        </div>
+                    </div>
+                `;
+                
+                feedElement.insertAdjacentHTML('afterbegin', notificationHtml);
+                
+                // Keep only last 10 notifications
+                const notifications = feedElement.children;
+                if (notifications.length > 10) {
+                    feedElement.removeChild(notifications[notifications.length - 1]);
+                }
+            }
+            
+            handleSystemAlert(alert) {
+                // Add to activity feed
+                this.addNotification(alert);
+                
+                // Show desktop notification if supported
+                if ('Notification' in window && Notification.permission === 'granted') {
+                    new Notification(alert.title, {
+                        body: alert.message,
+                        icon: '/static/img/logo.png'
+                    });
+                }
+            }
+            
+            getActivityIcon(type) {
+                const icons = {
+                    'system': '<i class="bi bi-cpu"></i>',
+                    'security': '<i class="bi bi-shield-exclamation"></i>',
+                    'activation': '<i class="bi bi-check-circle"></i>',
+                    'error': '<i class="bi bi-exclamation-triangle"></i>',
+                    'admin': '<i class="bi bi-person-gear"></i>'
+                };
+                return icons[type] || '<i class="bi bi-info-circle"></i>';
+            }
+            
+            startUptimeCounter() {
+                setInterval(() => {
+                    const now = new Date();
+                    const diff = now - this.startTime;
+                    const hours = Math.floor(diff / 3600000);
+                    const minutes = Math.floor((diff % 3600000) / 60000);
+                    const seconds = Math.floor((diff % 60000) / 1000);
+                    
+                    document.getElementById('uptime').textContent = 
+                        `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }, 1000);
+            }
+        }
+        
+        // Global functions
+        function refreshDashboard() {
+            const dashboard = window.realtimeDashboard;
+            if (dashboard && dashboard.socket) {
+                dashboard.socket.emit('request_system_stats');
+                dashboard.socket.emit('request_activity_feed');
+            }
+        }
+        
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            window.realtimeDashboard = new RealtimeDashboard();
+            
+            // Request notification permission
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission();
+            }
+        });
+    </script>
+</body>
+</html>

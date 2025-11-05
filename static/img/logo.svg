@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="96" viewBox="0 0 320 96">
+  <rect width="100%" height="100%" fill="none" />
+  <!-- abstract head circle -->
+  <g transform="translate(8,8)">
+    <circle cx="40" cy="40" r="36" fill="#2a0633" />
+    <circle cx="72" cy="12" r="6" fill="#ff7ab6" />
+    <g fill="#7b3be0">
+      <path d="M30 22c6-4 20-8 28 0l-6 4c-6-6-16-4-22 0z"/>
+    </g>
+  </g>
+  <!-- Title -->
+  <g transform="translate(96,44)">
+    <text x="0" y="0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="28" fill="#b58bf0" font-weight="700">RIF ACTIVATOR</text>
+  </g>
+  <g transform="translate(96,70)">
+    <text x="0" y="0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10" fill="#cfc0ff">iPhone 6S to 17 Pro Max</text>
+  </g>
+</svg>

@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الإدارة المحسنة | RiF Activator A12+</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            --success-gradient: linear-gradient(135deg, #00C9FF 0%, #92FE9D 100%);
+            --danger-gradient: linear-gradient(135deg, #FC466B 0%, #3F5EFB 100%);
+            --warning-gradient: linear-gradient(135deg, #FDBB2D 0%, #22C1C3 100%);
+            --info-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --shadow-light: 0 8px 32px rgba(31, 38, 135, 0.37);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-primary);
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: #4CAF50;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--secondary-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-title {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .dashboard-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--secondary-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #4CAF50;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .sections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: var(--shadow-light);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+            color: #4CAF50;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .management-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .management-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .management-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(-5px);
+        }
+
+        .management-icon {
+            font-size: 1.2rem;
+            color: #4CAF50;
+            width: 30px;
+            text-align: center;
+        }
+
+        .management-text {
+            flex: 1;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .management-count {
+            background: var(--secondary-gradient);
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            background: var(--secondary-gradient);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(76, 175, 80, 0.4);
+            color: white;
+        }
+
+        .action-btn.danger {
+            background: var(--danger-gradient);
+        }
+
+        .action-btn.warning {
+            background: var(--warning-gradient);
+        }
+
+        .action-btn.info {
+            background: var(--info-gradient);
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .quick-stat {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .quick-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .quick-stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            background: #4CAF50;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .status-text {
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+
+            .dashboard-title {
+                font-size: 2.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sections-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="/" class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>RiF Activator A12+</span>
+            </a>
+            <div class="admin-info">
+                <span>مرحباً، المدير</span>
+                <div class="admin-avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <section class="dashboard-header">
+            <h1 class="dashboard-title">🛡️ لوحة الإدارة المحسنة</h1>
+            <p class="dashboard-subtitle">إدارة شاملة لنظام تفعيل الأجهزة</p>
+        </section>
+
+        <div class="system-status">
+            <div class="status-indicator"></div>
+            <span class="status-text">النظام يعمل بشكل طبيعي</span>
+        </div>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-mobile-alt stat-icon"></i>
+                <div class="stat-value" id="totalActivations">-</div>
+                <div class="stat-label">إجمالي التفعيلات</div>
+            </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-calendar-day stat-icon"></i>
+                <div class="stat-value" id="todayActivations">-</div>
+                <div class="stat-label">تفعيلات اليوم</div>
+            </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-dollar-sign stat-icon"></i>
+                <div class="stat-value" id="totalRevenue">-</div>
+                <div class="stat-label">إجمالي الإيرادات</div>
+            </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-users stat-icon"></i>
+                <div class="stat-value" id="activeUsers">-</div>
+                <div class="stat-label">المستخدمين النشطين</div>
+            </div>
+        </section>
+
+        <section class="sections-grid">
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <i class="fas fa-list-alt section-icon"></i>
+                    <h3 class="section-title">إدارة الأرقام التسلسلية</h3>
+                </div>
+                
+                <div class="management-grid">
+                    <div class="management-item" onclick="loadSerials()">
+                        <i class="fas fa-mobile-alt management-icon"></i>
+                        <span class="management-text">عرض جميع الأرقام</span>
+                        <span class="management-count" id="serialsCount">-</span>
+                    </div>
+                    
+                    <div class="management-item" onclick="showAddSerial()">
+                        <i class="fas fa-plus management-icon"></i>
+                        <span class="management-text">إضافة رقم جديد</span>
+                    </div>
+                    
+                    <div class="management-item" onclick="bulkImport()">
+                        <i class="fas fa-upload management-icon"></i>
+                        <span class="management-text">استيراد متعدد</span>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="exportSerials()">
+                        <i class="fas fa-download"></i>
+                        تصدير البيانات
+                    </button>
+                    
+                    <button class="action-btn danger" onclick="clearAllSerials()">
+                        <i class="fas fa-trash"></i>
+                        مسح الكل
+                    </button>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <i class="fas fa-credit-card section-icon"></i>
+                    <h3 class="section-title">إدارة المدفوعات</h3>
+                </div>
+                
+                <div class="management-grid">
+                    <div class="management-item" onclick="loadPayments()">
+                        <i class="fas fa-list management-icon"></i>
+                        <span class="management-text">عرض المدفوعات</span>
+                        <span class="management-count" id="paymentsCount">-</span>
+                    </div>
+                    
+                    <div class="management-item" onclick="verifyPayments()">
+                        <i class="fas fa-check-circle management-icon"></i>
+                        <span class="management-text">التحقق التلقائي</span>
+                    </div>
+                    
+                    <div class="management-item" onclick="cleanupBadPayments()">
+                        <i class="fas fa-broom management-icon"></i>
+                        <span class="management-text">تنظيف البيانات</span>
+                    </div>
+                </div>
+
+                <div class="quick-stats">
+                    <div class="quick-stat">
+                        <div class="quick-stat-value" id="pendingPayments">-</div>
+                        <div class="quick-stat-label">معلقة</div>
+                    </div>
+                    
+                    <div class="quick-stat">
+                        <div class="quick-stat-value" id="verifiedPayments">-</div>
+                        <div class="quick-stat-label">مؤكدة</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <i class="fas fa-cogs section-icon"></i>
+                    <h3 class="section-title">إدارة النظام</h3>
+                </div>
+                
+                <div class="management-grid">
+                    <div class="management-item" onclick="manageApiKeys()">
+                        <i class="fas fa-key management-icon"></i>
+                        <span class="management-text">مفاتيح API</span>
+                        <span class="management-count" id="apiKeysCount">-</span>
+                    </div>
+                    
+                    <div class="management-item" onclick="manageSupportedModels()">
+                        <i class="fas fa-mobile management-icon"></i>
+                        <span class="management-text">الأجهزة المدعومة</span>
+                        <span class="management-count" id="modelsCount">-</span>
+                    </div>
+                    
+                    <div class="management-item" onclick="viewSystemLogs()">
+                        <i class="fas fa-file-alt management-icon"></i>
+                        <span class="management-text">سجلات النظام</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <i class="fas fa-chart-line section-icon"></i>
+                    <h3 class="section-title">التقارير والإحصائيات</h3>
+                </div>
+                
+                <div class="action-buttons">
+                    <a href="/reports" class="action-btn">
+                        <i class="fas fa-chart-bar"></i>
+                        لوحة التقارير
+                    </a>
+                    
+                    <a href="/realtime" class="action-btn info">
+                        <i class="fas fa-tachometer-alt"></i>
+                        المراقبة المباشرة
+                    </a>
+                    
+                    <button class="action-btn warning" onclick="generateReport()">
+                        <i class="fas fa-file-pdf"></i>
+                        تقرير شامل
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Load dashboard statistics
+        async function loadDashboardStats() {
+            try {
+                const response = await fetch('/api/admin/dashboard_stats');
+                const stats = await response.json();
+                
+                document.getElementById('totalActivations').textContent = stats.total_activations || '0';
+                document.getElementById('todayActivations').textContent = stats.today_activations || '0';
+                document.getElementById('totalRevenue').textContent = `$${stats.total_revenue || '0'}`;
+                document.getElementById('activeUsers').textContent = stats.active_users || '0';
+                
+                document.getElementById('serialsCount').textContent = stats.serials_count || '0';
+                document.getElementById('paymentsCount').textContent = stats.payments_count || '0';
+                document.getElementById('apiKeysCount').textContent = stats.api_keys_count || '0';
+                document.getElementById('modelsCount').textContent = stats.models_count || '0';
+                
+                document.getElementById('pendingPayments').textContent = stats.pending_payments || '0';
+                document.getElementById('verifiedPayments').textContent = stats.verified_payments || '0';
+            } catch (error) {
+                console.error('Error loading dashboard stats:', error);
+            }
+        }
+
+        // Serial management functions
+        async function loadSerials() {
+            try {
+                const response = await fetch('/api/admin/serials');
+                const data = await response.json();
+                
+                const serialsList = data.serials || [];
+                showModal('الأرقام التسلسلية المسجلة', generateSerialsTable(serialsList));
+            } catch (error) {
+                alert('خطأ في تحميل الأرقام التسلسلية');
+            }
+        }
+
+        function generateSerialsTable(serials) {
+            if (serials.length === 0) {
+                return '<p style="text-align: center; color: rgba(255,255,255,0.8);">لا توجد أرقام تسلسلية مسجلة</p>';
+            }
+
+            let table = `
+                <div style="max-height: 400px; overflow-y: auto;">
+                    <table style="width: 100%; border-collapse: collapse; color: white;">
+                        <thead style="background: rgba(255,255,255,0.1); position: sticky; top: 0;">
+                            <tr>
+                                <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.2);">الرقم التسلسلي</th>
+                                <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.2);">تاريخ التسجيل</th>
+                                <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.2);">الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            serials.forEach((serial, index) => {
+                table += `
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <td style="padding: 1rem; font-family: monospace; font-weight: 600;">${serial.serial}</td>
+                        <td style="padding: 1rem;">${new Date(serial.timestamp).toLocaleDateString('ar-EG')}</td>
+                        <td style="padding: 1rem;">
+                            <button onclick="deleteSerial('${serial.serial}')" style="background: #e74c3c; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            table += '</tbody></table></div>';
+            return table;
+        }
+
+        async function deleteSerial(serial) {
+            if (!confirm(`هل أنت متأكد من حذف الرقم التسلسلي: ${serial}؟`)) return;
+
+            try {
+                const response = await fetch('/api/delete_serial', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ serial: serial })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert('تم حذف الرقم التسلسلي بنجاح');
+                    loadSerials(); // Reload the list
+                    loadDashboardStats(); // Refresh stats
+                } else {
+                    alert('خطأ في حذف الرقم التسلسلي');
+                }
+            } catch (error) {
+                alert('خطأ في الاتصال');
+            }
+        }
+
+        function showAddSerial() {
+            const content = `
+                <div style="padding: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: white; font-weight: 600;">الرقم التسلسلي:</label>
+                    <input type="text" id="newSerial" style="width: 100%; padding: 1rem; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; border-radius: 10px; font-family: monospace;" placeholder="أدخل الرقم التسلسلي">
+                    <div style="margin-top: 1rem; text-align: center;">
+                        <button onclick="addSerial()" style="background: #4CAF50; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-weight: 600;">
+                            <i class="fas fa-plus"></i> إضافة
+                        </button>
+                    </div>
+                </div>
+            `;
+            showModal('إضافة رقم تسلسلي جديد', content);
+        }
+
+        async function addSerial() {
+            const serial = document.getElementById('newSerial').value.trim();
+            if (!serial) {
+                alert('يرجى إدخال الرقم التسلسلي');
+                return;
+            }
+
+            try {
+                const response = await fetch('/pay_register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        serial: serial,
+                        manual_add: true 
+                    })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert('تم إضافة الرقم التسلسلي بنجاح');
+                    closeModal();
+                    loadDashboardStats(); // Refresh stats
+                } else {
+                    alert(result.message || 'خطأ في إضافة الرقم التسلسلي');
+                }
+            } catch (error) {
+                alert('خطأ في الاتصال');
+            }
+        }
+
+        async function clearAllSerials() {
+            if (!confirm('هل أنت متأكد من حذف جميع الأرقام التسلسلية؟ هذا الإجراء لا يمكن التراجع عنه!')) return;
+
+            try {
+                const response = await fetch('/api/admin/delete_all_serials', {
+                    method: 'POST'
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert('تم حذف جميع الأرقام التسلسلية بنجاح');
+                    loadDashboardStats(); // Refresh stats
+                } else {
+                    alert('خطأ في حذف الأرقام التسلسلية');
+                }
+            } catch (error) {
+                alert('خطأ في الاتصال');
+            }
+        }
+
+        // Payment management functions
+        async function loadPayments() {
+            try {
+                const response = await fetch('/api/admin/payments');
+                const data = await response.json();
+                
+                const paymentsList = data.payments || [];
+                showModal('سجل المدفوعات', generatePaymentsTable(paymentsList));
+            } catch (error) {
+                alert('خطأ في تحميل المدفوعات');
+            }
+        }
+
+        function generatePaymentsTable(payments) {
+            if (payments.length === 0) {
+                return '<p style="text-align: center; color: rgba(255,255,255,0.8);">لا توجد مدفوعات مسجلة</p>';
+            }
+
+            let table = `
+                <div style="max-height: 400px; overflow-y: auto;">
+                    <table style="width: 100%; border-collapse: collapse; color: white;">
+                        <thead style="background: rgba(255,255,255,0.1); position: sticky; top: 0;">
+                            <tr>
+                                <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.2);">الرقم التسلسلي</th>
+                                <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.2);">المبلغ</th>
+                                <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.2);">الحالة</th>
+                                <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.2);">التاريخ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            payments.forEach(payment => {
+                const statusColor = payment.verified ? '#4CAF50' : '#ff9800';
+                const statusText = payment.verified ? 'مؤكد' : 'معلق';
+                
+                table += `
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <td style="padding: 1rem; font-family: monospace; font-weight: 600;">${payment.serial}</td>
+                        <td style="padding: 1rem;">$${payment.amount}</td>
+                        <td style="padding: 1rem;">
+                            <span style="background: ${statusColor}; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; font-weight: 600;">
+                                ${statusText}
+                            </span>
+                        </td>
+                        <td style="padding: 1rem;">${new Date(payment.timestamp).toLocaleDateString('ar-EG')}</td>
+                    </tr>
+                `;
+            });
+
+            table += '</tbody></table></div>';
+            return table;
+        }
+
+        async function verifyPayments() {
+            try {
+                const response = await fetch('/api/auto_verify', {
+                    method: 'POST'
+                });
+                
+                const result = await response.json();
+                alert(`تم التحقق من ${result.verified_count || 0} مدفوعة`);
+                loadDashboardStats(); // Refresh stats
+            } catch (error) {
+                alert('خطأ في التحقق من المدفوعات');
+            }
+        }
+
+        async function cleanupBadPayments() {
+            if (!confirm('هل تريد تنظيف المدفوعات المعطلة؟')) return;
+
+            try {
+                const response = await fetch('/api/admin/cleanup_bad_payments', {
+                    method: 'POST'
+                });
+                
+                const result = await response.json();
+                alert(`تم تنظيف ${result.cleaned_count || 0} مدفوعة`);
+                loadDashboardStats(); // Refresh stats
+            } catch (error) {
+                alert('خطأ في تنظيف المدفوعات');
+            }
+        }
+
+        // System management functions
+        async function manageApiKeys() {
+            try {
+                const response = await fetch('/api/admin/api_keys');
+                const data = await response.json();
+                
+                showModal('إدارة مفاتيح API', generateApiKeysTable(data.api_keys || []));
+            } catch (error) {
+                alert('خطأ في تحميل مفاتيح API');
+            }
+        }
+
+        function generateApiKeysTable(apiKeys) {
+            let content = `
+                <div style="margin-bottom: 1rem;">
+                    <button onclick="addNewApiKey()" style="background: #4CAF50; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 10px; cursor: pointer; font-weight: 600;">
+                        <i class="fas fa-plus"></i> إضافة مفتاح جديد
+                    </button>
+                </div>
+            `;
+
+            if (apiKeys.length === 0) {
+                content += '<p style="text-align: center; color: rgba(255,255,255,0.8);">لا توجد مفاتيح API</p>';
+                return content;
+            }
+
+            content += `
+                <div style="max-height: 300px; overflow-y: auto;">
+                    <table style="width: 100%; border-collapse: collapse; color: white;">
+                        <thead style="background: rgba(255,255,255,0.1);">
+                            <tr>
+                                <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.2);">المفتاح</th>
+                                <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.2);">الحالة</th>
+                                <th style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.2);">الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            apiKeys.forEach(key => {
+                const statusColor = key.active ? '#4CAF50' : '#f44336';
+                const statusText = key.active ? 'نشط' : 'معطل';
+                
+                content += `
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <td style="padding: 1rem; font-family: monospace;">${key.api_key}</td>
+                        <td style="padding: 1rem;">
+                            <span style="background: ${statusColor}; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">
+                                ${statusText}
+                            </span>
+                        </td>
+                        <td style="padding: 1rem;">
+                            <button onclick="toggleApiKey('${key.api_key}')" style="background: #ff9800; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; margin-left: 0.5rem;">
+                                ${key.active ? 'تعطيل' : 'تفعيل'}
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            content += '</tbody></table></div>';
+            return content;
+        }
+
+        async function toggleApiKey(apiKey) {
+            try {
+                const response = await fetch(`/api/admin/api_keys/${apiKey}/toggle`, {
+                    method: 'POST'
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    manageApiKeys(); // Reload the list
+                } else {
+                    alert('خطأ في تغيير حالة المفتاح');
+                }
+            } catch (error) {
+                alert('خطأ في الاتصال');
+            }
+        }
+
+        // Modal functions
+        function showModal(title, content) {
+            const modal = document.createElement('div');
+            modal.innerHTML = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; display: flex; align-items: center; justify-content: center;" onclick="closeModal()">
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; max-width: 800px; width: 90%; max-height: 80%; overflow: hidden; backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.18);" onclick="event.stopPropagation()">
+                        <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.2); display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.1);">
+                            <h3 style="margin: 0; color: white; font-weight: 700;">${title}</h3>
+                            <button onclick="closeModal()" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">✕</button>
+                        </div>
+                        <div style="padding: 1.5rem; overflow-y: auto; max-height: 500px;">
+                            ${content}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.id = 'adminModal';
+            document.body.appendChild(modal);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('adminModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        // إضافة رقم تسلسلي جديد
+        function showAddSerial() {
+            const modal = createModal('إضافة رقم تسلسلي جديد', `
+                <div style="padding: 2rem;">
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; color: white; margin-bottom: 0.5rem;">الرقم التسلسلي:</label>
+                        <input type="text" id="newSerial" placeholder="مثال: C8KV7Q2PH72Y" 
+                               style="width: 100%; padding: 0.8rem; border: none; border-radius: 10px; background: rgba(255,255,255,0.1); color: white;" 
+                               maxlength="12">
+                    </div>
+                    <button onclick="addSerial()" style="background: #4CAF50; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-weight: 600;">
+                        إضافة الرقم التسلسلي
+                    </button>
+                </div>
+            `);
+        }
+
+        function addSerial() {
+            const serial = document.getElementById('newSerial').value.trim().toUpperCase();
+            
+            if (!serial || serial.length !== 12) {
+                showNotification('يرجى إدخال رقم تسلسلي صحيح (12 رقم/حرف)', 'error');
+                return;
+            }
+
+            fetch('/api/admin/add_serial', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ serial: serial })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    closeModal();
+                    loadSerials();
+                } else {
+                    showNotification(data.error, 'error');
+                }
+            })
+            .catch(error => {
+                showNotification('حدث خطأ في الاتصال', 'error');
+            });
+        }
+
+        // حذف رقم تسلسلي
+        function deleteSerial(serial) {
+            if (!confirm(`هل تريد حذف الرقم التسلسلي ${serial}؟`)) {
+                return;
+            }
+
+            fetch(`/api/admin/delete_serial/${serial}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    loadSerials();
+                } else {
+                    showNotification(data.error, 'error');
+                }
+            })
+            .catch(error => {
+                showNotification('حدث خطأ في الحذف', 'error');
+            });
+        }
+
+        // تصدير الأرقام التسلسلية
+        function exportSerials() {
+            window.open('/api/admin/export_serials', '_blank');
+            showNotification('تم بدء التصدير', 'success');
+        }
+
+        // مسح جميع الأرقام التسلسلية
+        function clearAllSerials() {
+            if (!confirm('تحذير: سيتم حذف جميع الأرقام التسلسلية والمدفوعات!\n\nهل أنت متأكد؟')) {
+                return;
+            }
+
+            fetch('/api/admin/clear_serials', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    loadDashboardStats();
+                    loadSerials();
+                } else {
+                    showNotification(data.error, 'error');
+                }
+            })
+            .catch(error => {
+                showNotification('حدث خطأ في المسح', 'error');
+            });
+        }
+
+        // استيراد مجموعي
+        function bulkImport() {
+            const modal = createModal('استيراد مجموعة من الأرقام التسلسلية', `
+                <div style="padding: 2rem;">
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; color: white; margin-bottom: 0.5rem;">الأرقام التسلسلية (سطر جديد أو فاصلة لكل رقم):</label>
+                        <textarea id="bulkSerials" placeholder="C8KV7Q2PH72Y\nD9LW8R3QI83Z\n..." 
+                                  style="width: 100%; height: 200px; padding: 0.8rem; border: none; border-radius: 10px; background: rgba(255,255,255,0.1); color: white; resize: vertical;"></textarea>
+                    </div>
+                    <button onclick="processBulkImport()" style="background: #4CAF50; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-weight: 600;">
+                        استيراد الأرقام
+                    </button>
+                </div>
+            `);
+        }
+
+        function processBulkImport() {
+            const serials = document.getElementById('bulkSerials').value.trim();
+            
+            if (!serials) {
+                showNotification('يرجى إدخال الأرقام التسلسلية', 'error');
+                return;
+            }
+
+            fetch('/api/admin/bulk_import', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ serials: serials })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    closeModal();
+                    loadDashboardStats();
+                    loadSerials();
+                } else {
+                    showNotification(data.error, 'error');
+                }
+            })
+            .catch(error => {
+                showNotification('حدث خطأ في الاستيراد', 'error');
+            });
+        }
+
+        // التحقق من المدفوعات
+        function verifyPayments() {
+            showNotification('جاري التحقق من المدفوعات...', 'info');
+            
+            fetch('/api/auto_verify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ force: true })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(`تم التحقق من ${data.verified_count || 0} معاملة`, 'success');
+                    loadDashboardStats();
+                } else {
+                    showNotification(data.error || 'فشل في التحقق', 'error');
+                }
+            })
+            .catch(error => {
+                showNotification('حدث خطأ في التحقق', 'error');
+            });
+        }
+
+        // تنظيف المدفوعات السيئة
+        function cleanupBadPayments() {
+            if (!confirm('هل تريد حذف المدفوعات غير المكتملة؟')) {
+                return;
+            }
+
+            fetch('/api/admin/cleanup_bad_payments', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    loadDashboardStats();
+                } else {
+                    showNotification(data.error, 'error');
+                }
+            })
+            .catch(error => {
+                showNotification('حدث خطأ في التنظيف', 'error');
+            });
+        }
+
+        // إدارة مفاتيح API
+        function manageApiKeys() {
+            fetch('/api/admin/api_keys')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const keysHtml = data.api_keys.map(key => `
+                        <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
+                            <div style="color: white; font-weight: 600;">${key.service_name}</div>
+                            <div style="color: #ccc; font-size: 0.9rem; margin: 0.5rem 0;">${key.api_key}</div>
+                            <div style="color: #ccc; font-size: 0.8rem;">حالة: ${key.is_active ? 'مفعل' : 'معطل'}</div>
+                            <button onclick="toggleApiKey('${key.api_key}')" 
+                                    style="background: #ff9800; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; margin-top: 0.5rem;">
+                                ${key.is_active ? 'تعطيل' : 'تفعيل'}
+                            </button>
+                        </div>
+                    `).join('');
+                    
+                    const modal = createModal('إدارة مفاتيح API', `
+                        <div style="padding: 2rem;">
+                            ${keysHtml}
+                            <button onclick="addNewApiKey()" style="background: #4CAF50; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 10px; cursor: pointer; font-weight: 600;">
+                                إضافة مفتاح جديد
+                            </button>
+                        </div>
+                    `);
+                }
+            });
+        }
+
+        // إدارة طرازات الأجهزة
+        function manageSupportedModels() {
+            fetch('/api/admin/manage_models')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const modelsHtml = data.models.map(model => `
+                        <div style="background: rgba(255,255,255,0.1); padding: 0.8rem; border-radius: 8px; margin-bottom: 0.5rem; color: white;">
+                            ${model}
+                        </div>
+                    `).join('');
+                    
+                    const modal = createModal('الطرازات المدعومة', `
+                        <div style="padding: 2rem;">
+                            <div style="color: white; margin-bottom: 1rem;">عدد الطرازات المدعومة: ${data.count}</div>
+                            <div style="max-height: 400px; overflow-y: auto;">
+                                ${modelsHtml}
+                            </div>
+                        </div>
+                    `);
+                }
+            });
+        }
+
+        // عرض سجلات النظام
+        function viewSystemLogs() {
+            fetch('/api/admin/system_logs')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const logsHtml = data.logs.map(log => `
+                        <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
+                            <div style="color: #4CAF50; font-weight: 600; margin-bottom: 0.5rem;">${log.file}</div>
+                            <pre style="color: #ccc; font-size: 0.8rem; white-space: pre-wrap; max-height: 200px; overflow-y: auto;">${log.content}</pre>
+                        </div>
+                    `).join('');
+                    
+                    const systemInfoHtml = `
+                        <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
+                            <h4 style="color: white; margin-bottom: 1rem;">معلومات النظام</h4>
+                            <div style="color: #ccc;">
+                                <div>استخدام المعالج: ${data.system_info.cpu_percent}%</div>
+                                <div>استخدام الذاكرة: ${data.system_info.memory_percent}%</div>
+                                <div>استخدام القرص: ${data.system_info.disk_usage}%</div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    const modal = createModal('سجلات النظام', `
+                        <div style="padding: 2rem; max-height: 80vh; overflow-y: auto;">
+                            ${systemInfoHtml}
+                            ${logsHtml}
+                        </div>
+                    `);
+                }
+            });
+        }
+
+        // إنشاء تقرير
+        function generateReport() {
+            fetch('/api/admin/generate_report?days=30')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const reportHtml = `
+                        <div style="padding: 2rem;">
+                            <h3 style="color: white; margin-bottom: 1rem;">تقرير شامل - آخر ${data.period_days} يوم</h3>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                                <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; text-align: center;">
+                                    <div style="color: #4CAF50; font-size: 2rem; font-weight: bold;">${data.statistics.total_serials}</div>
+                                    <div style="color: white;">إجمالي الأرقام التسلسلية</div>
+                                </div>
+                                <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; text-align: center;">
+                                    <div style="color: #2196F3; font-size: 2rem; font-weight: bold;">${data.statistics.verified_payments}</div>
+                                    <div style="color: white;">مدفوعات مؤكدة</div>
+                                </div>
+                                <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; text-align: center;">
+                                    <div style="color: #FF9800; font-size: 2rem; font-weight: bold;">$${data.statistics.total_revenue}</div>
+                                    <div style="color: white;">إجمالي الإيرادات</div>
+                                </div>
+                            </div>
+                            
+                            <h4 style="color: white; margin-bottom: 1rem;">أهم المعاملات:</h4>
+                            ${data.top_transactions.map(tx => `
+                                <div style="background: rgba(255,255,255,0.05); padding: 0.8rem; border-radius: 8px; margin-bottom: 0.5rem;">
+                                    <span style="color: white;">${tx.serial}</span> - 
+                                    <span style="color: #4CAF50;">${tx.amount} ${tx.currency}</span> - 
+                                    <span style="color: #ccc; font-size: 0.9rem;">${new Date(tx.date).toLocaleDateString('ar')}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                    
+                    const modal = createModal('تقرير النشاط', reportHtml);
+                } else {
+                    showNotification(data.error, 'error');
+                }
+            })
+            .catch(error => {
+                showNotification('حدث خطأ في إنشاء التقرير', 'error');
+            });
+        }
+
+        // عرض الإشعارات
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 10px;
+                z-index: 10000;
+                font-weight: 600;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+                animation: slideInRight 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboardStats();
+            
+            // Refresh stats every 30 seconds
+            setInterval(loadDashboardStats, 30000);
+        });
+    </script>
+    
+    <style>
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    </style>
+</body>
+</html>

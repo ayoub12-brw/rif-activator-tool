@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فحص حالة الجهاز | RiF Activator A12+</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            --success-gradient: linear-gradient(135deg, #00C9FF 0%, #92FE9D 100%);
+            --danger-gradient: linear-gradient(135deg, #FC466B 0%, #3F5EFB 100%);
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --shadow-light: 0 8px 32px rgba(31, 38, 135, 0.37);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: #4CAF50;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .nav-link.active {
+            background: var(--secondary-gradient);
+            color: white;
+        }
+
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 400;
+        }
+
+        .check-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-light);
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            display: block;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(76, 175, 80, 0.8);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .btn-check {
+            background: var(--secondary-gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0 auto;
+            min-width: 200px;
+            justify-content: center;
+        }
+
+        .btn-check:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(76, 175, 80, 0.4);
+        }
+
+        .result-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .result-card.success {
+            border-color: rgba(76, 175, 80, 0.5);
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(69, 160, 73, 0.1));
+        }
+
+        .result-card.error {
+            border-color: rgba(244, 67, 54, 0.5);
+            background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(229, 57, 53, 0.1));
+        }
+
+        .result-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .result-icon.success {
+            color: #4CAF50;
+        }
+
+        .result-icon.error {
+            color: #f44336;
+        }
+
+        .result-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .result-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .serial-display {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: #4CAF50;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: white;
+            margin-top: 1rem;
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .info-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .info-card i {
+            font-size: 2.5rem;
+            color: #4CAF50;
+            margin-bottom: 1rem;
+        }
+
+        .info-card h3 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .check-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="/" class="logo">
+                <i class="fas fa-mobile-alt"></i>
+                <span>RiF Activator A12+</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">الرئيسية</a>
+                <a href="/check_device" class="nav-link active">فحص الجهاز</a>
+                <a href="/api/docs" class="nav-link">التوثيق</a>
+                <a href="/admin" class="nav-link">لوحة التحكم</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <section class="page-header">
+            <h1 class="page-title">🔍 فحص حالة الجهاز</h1>
+            <p class="page-subtitle">تحقق من حالة تفعيل جهازك باستخدام الرقم التسلسلي</p>
+        </section>
+
+        <section class="check-section">
+            <form id="checkForm">
+                <div class="form-group">
+                    <label class="form-label" for="serialInput">الرقم التسلسلي للجهاز</label>
+                    <input 
+                        type="text" 
+                        id="serialInput" 
+                        name="serial" 
+                        class="form-input" 
+                        placeholder="أدخل الرقم التسلسلي (مثال: C8KV7Q2PH72Y)"
+                        required
+                    >
+                </div>
+                
+                <button type="submit" class="btn-check">
+                    <i class="fas fa-search"></i>
+                    <span>فحص الحالة</span>
+                </button>
+            </form>
+            
+            <div class="loading" id="loadingIndicator">
+                <i class="fas fa-spinner"></i>
+                <p>جاري فحص حالة الجهاز...</p>
+            </div>
+        </section>
+
+        <div class="result-card" id="resultCard">
+            <div class="result-icon" id="resultIcon"></div>
+            <h3 class="result-title" id="resultTitle"></h3>
+            <p class="result-description" id="resultDescription"></p>
+            <div class="serial-display" id="serialDisplay"></div>
+            
+            <div id="activatedInfo" style="display: none;">
+                <div class="info-cards">
+                    <div class="info-card">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>حالة التفعيل</h3>
+                        <p>الجهاز مفعل بنجاح ويعمل بشكل طبيعي</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>الحماية</h3>
+                        <p>محمي ضد إعادة التعيين والقفل</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>الصيانة</h3>
+                        <p>دعم مستمر وتحديثات مجانية</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="check-section">
+            <h2 style="color: white; text-align: center; margin-bottom: 1.5rem;">💡 كيفية العثور على الرقم التسلسلي</h2>
+            
+            <div class="info-cards">
+                <div class="info-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>من الإعدادات</h3>
+                    <p>الإعدادات ← عام ← حول ← الرقم التسلسلي</p>
+                </div>
+                
+                <div class="info-card">
+                    <i class="fas fa-laptop"></i>
+                    <h3>من iTunes</h3>
+                    <p>اتصال الجهاز بـ iTunes وعرض معلومات الجهاز</p>
+                </div>
+                
+                <div class="info-card">
+                    <i class="fas fa-qrcode"></i>
+                    <h3>من الصندوق</h3>
+                    <p>الرقم التسلسلي مطبوع على ملصق صندوق الجهاز</p>
+                </div>
+                
+                <div class="info-card">
+                    <i class="fas fa-phone"></i>
+                    <h3>كود الطلب</h3>
+                    <p>اطلب *#06# لعرض معلومات الجهاز</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const checkForm = document.getElementById('checkForm');
+        const serialInput = document.getElementById('serialInput');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const resultCard = document.getElementById('resultCard');
+        const resultIcon = document.getElementById('resultIcon');
+        const resultTitle = document.getElementById('resultTitle');
+        const resultDescription = document.getElementById('resultDescription');
+        const serialDisplay = document.getElementById('serialDisplay');
+        const activatedInfo = document.getElementById('activatedInfo');
+
+        checkForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const serial = serialInput.value.trim().toUpperCase();
+            
+            if (!serial) {
+                showError('يرجى إدخال الرقم التسلسلي');
+                return;
+            }
+
+            if (serial.length < 8) {
+                showError('الرقم التسلسلي يجب أن يكون أطول من 8 أحرف');
+                return;
+            }
+
+            try {
+                showLoading(true);
+                hideResult();
+                
+                const response = await fetch('/api/check_serial', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ serial: serial })
+                });
+
+                const data = await response.json();
+                
+                if (data.registered) {
+                    showSuccess(serial);
+                } else {
+                    showNotFound(serial);
+                }
+            } catch (error) {
+                showError('حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.');
+                console.error('Error:', error);
+            } finally {
+                showLoading(false);
+            }
+        });
+
+        serialInput.addEventListener('input', function(e) {
+            let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+            e.target.value = value;
+        });
+
+        function showLoading(show) {
+            loadingIndicator.style.display = show ? 'block' : 'none';
+            checkForm.querySelector('button').disabled = show;
+        }
+
+        function hideResult() {
+            resultCard.style.display = 'none';
+            resultCard.className = 'result-card';
+        }
+
+        function showSuccess(serial) {
+            resultCard.className = 'result-card success';
+            resultIcon.className = 'result-icon success';
+            resultIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+            resultTitle.textContent = '✅ الجهاز مفعل';
+            resultDescription.textContent = 'تم العثور على الرقم التسلسلي في قاعدة البيانات. جهازك مفعل بنجاح.';
+            serialDisplay.textContent = serial;
+            activatedInfo.style.display = 'block';
+            resultCard.style.display = 'block';
+        }
+
+        function showNotFound(serial) {
+            resultCard.className = 'result-card error';
+            resultIcon.className = 'result-icon error';
+            resultIcon.innerHTML = '<i class="fas fa-times-circle"></i>';
+            resultTitle.textContent = '❌ الجهاز غير مفعل';
+            resultDescription.textContent = 'لم يتم العثور على الرقم التسلسلي في قاعدة البيانات. يرجى تفعيل الجهاز أولاً.';
+            serialDisplay.textContent = serial;
+            activatedInfo.style.display = 'none';
+            resultCard.style.display = 'block';
+        }
+
+        function showError(message) {
+            resultCard.className = 'result-card error';
+            resultIcon.className = 'result-icon error';
+            resultIcon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+            resultTitle.textContent = '⚠️ خطأ في الفحص';
+            resultDescription.textContent = message;
+            serialDisplay.style.display = 'none';
+            activatedInfo.style.display = 'none';
+            resultCard.style.display = 'block';
+        }
+
+        // Auto-format serial number as user types
+        serialInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                checkForm.dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+</body>
+</html>

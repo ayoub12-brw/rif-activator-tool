@@ -1,0 +1,559 @@
+components:
+  schemas:
+    ActivationRequestSchema:
+      additionalProperties: false
+      properties:
+        activation_type:
+          description: نوع التفعيل
+          example: premium
+          type: string
+        device_info:
+          allOf:
+          - $ref: '#/components/schemas/DeviceInfoSchema'
+          description: معلومات الجهاز
+        serial_number:
+          description: الرقم التسلسلي للجهاز
+          example: SN123456789
+          type: string
+      required:
+      - serial_number
+      type: object
+    ActivationResponseSchema:
+      additionalProperties: false
+      properties:
+        activation_id:
+          description: معرف التفعيل
+          example: 12345
+          type: integer
+        message:
+          description: رسالة التفعيل
+          example: تم التفعيل بنجاح
+          type: string
+        success:
+          description: حالة التفعيل
+          example: true
+          type: boolean
+        timestamp:
+          description: وقت التفعيل
+          format: date-time
+          type: string
+      type: object
+    DeviceInfoSchema:
+      additionalProperties: false
+      properties:
+        ios:
+          description: إصدار iOS
+          example: '17.1'
+          type: string
+        model:
+          description: نموذج الجهاز
+          example: iPhone 14 Pro
+          type: string
+        serial:
+          description: الرقم التسلسلي
+          example: SN123456789
+          type: string
+      type: object
+    ErrorResponseSchema:
+      additionalProperties: false
+      properties:
+        code:
+          description: رمز الخطأ
+          example: INVALID_REQUEST
+          type: string
+        details:
+          additionalProperties: {}
+          description: تفاصيل إضافية
+          type: object
+        error:
+          description: رسالة الخطأ
+          example: خطأ في الطلب
+          type: string
+      type: object
+    LoginRequestSchema:
+      additionalProperties: false
+      properties:
+        password:
+          description: كلمة المرور
+          example: password123
+          type: string
+        totp_code:
+          description: رمز التوثيق الثنائي
+          example: '123456'
+          type: string
+        username:
+          description: اسم المستخدم
+          example: admin
+          type: string
+      required:
+      - password
+      - username
+      type: object
+    LoginResponseSchema:
+      additionalProperties: false
+      properties:
+        message:
+          description: رسالة النتيجة
+          example: تم تسجيل الدخول بنجاح
+          type: string
+        qr_code:
+          description: كود QR للتوثيق الثنائي (base64)
+          type: string
+        requires_2fa:
+          description: يتطلب توثيق ثنائي
+          example: false
+          type: boolean
+        success:
+          description: حالة تسجيل الدخول
+          example: true
+          type: boolean
+      type: object
+    ReportRequestSchema:
+      additionalProperties: false
+      properties:
+        days:
+          description: عدد الأيام للتقرير
+          example: 30
+          type: integer
+        include_charts:
+          description: تضمين الرسوم البيانية
+          example: true
+          type: boolean
+        report_type:
+          description: نوع التقرير
+          enum:
+          - comprehensive
+          - activation
+          - security
+          - revenue
+          example: comprehensive
+          type: string
+      type: object
+    ReportResponseSchema:
+      additionalProperties: false
+      properties:
+        activation_statistics:
+          additionalProperties: {}
+          description: إحصائيات التفعيلات
+          type: object
+        charts:
+          additionalProperties: {}
+          description: الرسوم البيانية (base64)
+          type: object
+        metadata:
+          additionalProperties: {}
+          description: معلومات التقرير
+          type: object
+        revenue_analytics:
+          additionalProperties: {}
+          description: تحليل الإيرادات
+          type: object
+        security_report:
+          additionalProperties: {}
+          description: تقرير الأمان
+          type: object
+      type: object
+    ScheduleRequestSchema:
+      additionalProperties: false
+      properties:
+        days:
+          description: عدد الأيام للتقرير
+          example: 7
+          type: integer
+        email_recipients:
+          description: قائمة البريد الإلكتروني للمستلمين
+          items:
+            format: email
+            type: string
+          type: array
+        format_type:
+          description: صيغة التقرير
+          enum:
+          - pdf
+          - json
+          - excel
+          example: pdf
+          type: string
+        frequency:
+          description: تكرار الجدول
+          enum:
+          - daily
+          - weekly
+          - monthly
+          example: weekly
+          type: string
+        name:
+          description: اسم الجدول
+          example: تقرير أسبوعي
+          type: string
+      required:
+      - frequency
+      - name
+      type: object
+    ScheduleResponseSchema:
+      additionalProperties: false
+      properties:
+        active:
+          description: حالة النشاط
+          example: true
+          type: boolean
+        days:
+          description: عدد الأيام
+          example: 7
+          type: integer
+        format_type:
+          description: صيغة التقرير
+          example: pdf
+          type: string
+        frequency:
+          description: تكرار الجدول
+          example: weekly
+          type: string
+        id:
+          description: معرف الجدول
+          example: 1
+          type: integer
+        last_run:
+          description: آخر تشغيل
+          format: date-time
+          type: string
+        name:
+          description: اسم الجدول
+          example: تقرير أسبوعي
+          type: string
+      type: object
+  securitySchemes:
+    admin_auth:
+      description: Admin authentication with username/password
+      scheme: basic
+      type: http
+    session_auth:
+      description: Session-based authentication using Flask sessions
+      in: cookie
+      name: session
+      type: apiKey
+info:
+  contact:
+    email: support@rif-activator.com
+    name: RiF Activator Support
+  description: "\n                ## نظام RiF Activator A12+ API\n               \
+    \ \n                نظام شامل لإدارة وتفعيل الأجهزة مع مزايا متقدمة:\n       \
+    \         \n                ### \U0001F680 المزايا الأساسية\n                -\
+    \ **تفعيل الأجهزة**: تفعيل آمن وسريع للأجهزة\n                - **إدارة المستخدمين**:\
+    \ نظام أمان متقدم مع 2FA\n                - **التقارير والإحصائيات**: تقارير شاملة\
+    \ ومفصلة\n                - **المراقبة الفورية**: مراقبة النظام في الوقت الفعلي\n\
+    \                \n                ### \U0001F512 الأمان\n                - توثيق\
+    \ ثنائي العامل (2FA)\n                - حماية ضد هجمات Brute Force\n         \
+    \       - تشفير البيانات الحساسة\n                - مراقبة محاولات الاختراق\n\
+    \                \n                ### \U0001F4CA التقارير\n                -\
+    \ تقارير تفاعلية مع رسوم بيانية\n                - جدولة دورية للتقارير\n    \
+    \            - تصدير متعدد الأشكال (PDF, JSON, Excel)\n                - إحصائيات\
+    \ شاملة للأداء\n                \n                ### \U0001F310 الاستخدام\n \
+    \               جميع APIs تتطلب تسجيل دخول Admin باستثناء endpoints العامة.\n\
+    \                "
+  license:
+    name: Proprietary License
+    url: https://rif-activator.com/license
+  title: RiF Activator A12+ API
+  version: 2.0.0
+openapi: 3.0.0
+paths:
+  /activate:
+    post:
+      description: تفعيل جهاز iPhone/iPad جديد مع التحقق من الرقم التسلسلي
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActivationRequestSchema'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivationResponseSchema'
+          description: تم التفعيل بنجاح
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseSchema'
+          description: خطأ في البيانات المرسلة
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseSchema'
+          description: الجهاز مفعل مسبقاً
+      summary: تفعيل جهاز جديد
+      tags:
+      - Device Activation
+  /admin/login:
+    post:
+      description: تسجيل دخول لوحة الإدارة مع دعم التوثيق الثنائي
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestSchema'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponseSchema'
+          description: تم تسجيل الدخول بنجاح
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseSchema'
+          description: بيانات دخول خاطئة
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseSchema'
+          description: تم تجاوز عدد المحاولات المسموح
+      summary: تسجيل دخول المدير
+      tags:
+      - Admin Authentication
+  /admin/setup-2fa:
+    post:
+      description: إنشاء وإعداد التوثيق الثنائي لحساب المدير
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  backup_codes:
+                    description: رموز النسخ الاحتياطي
+                    items:
+                      type: string
+                    type: array
+                  qr_code:
+                    description: QR Code image (base64)
+                    type: string
+                  secret_key:
+                    description: المفتاح السري
+                    type: string
+                type: object
+          description: تم إعداد 2FA بنجاح
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseSchema'
+          description: غير مصرح - يتطلب تسجيل دخول
+      security:
+      - session_auth: []
+      summary: إعداد التوثيق الثنائي
+      tags:
+      - Admin Authentication
+  /api/reports/export/{format_type}:
+    post:
+      description: تصدير تقرير بصيغة محددة (PDF, JSON, Excel)
+      parameters:
+      - description: صيغة التصدير
+        in: path
+        name: format_type
+        required: true
+        schema:
+          enum:
+          - pdf
+          - json
+          - excel
+          type: string
+      - description: عدد الأيام للتقرير
+        in: query
+        name: days
+        schema:
+          default: 30
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportResponseSchema'
+            application/pdf:
+              schema:
+                format: binary
+                type: string
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                format: binary
+                type: string
+          description: ملف التقرير المصدر
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseSchema'
+          description: نوع التصدير غير مدعوم
+      security:
+      - session_auth: []
+      summary: تصدير تقرير
+      tags:
+      - Reports & Analytics
+  /api/reports/generate:
+    get:
+      description: توليد تقرير شامل للنظام مع إحصائيات مفصلة
+      parameters:
+      - description: عدد الأيام للتقرير
+        in: query
+        name: days
+        schema:
+          default: 30
+          maximum: 365
+          minimum: 1
+          type: integer
+      - description: نوع التقرير
+        in: query
+        name: type
+        schema:
+          default: comprehensive
+          enum:
+          - comprehensive
+          - activation
+          - security
+          - revenue
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportResponseSchema'
+          description: تم توليد التقرير بنجاح
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseSchema'
+          description: غير مصرح
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseSchema'
+          description: خطأ في الخادم
+      security:
+      - session_auth: []
+      summary: توليد تقرير شامل
+      tags:
+      - Reports & Analytics
+  /api/schedules:
+    get:
+      description: جلب قائمة جميع جداول التقارير المكونة
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  schedules:
+                    items:
+                      $ref: '#/components/schemas/ScheduleResponseSchema'
+                    type: array
+                type: object
+          description: قائمة الجداول
+      security:
+      - session_auth: []
+      summary: جلب جداول التقارير
+      tags:
+      - Report Scheduling
+    post:
+      description: إنشاء جدول دوري جديد للتقارير
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleRequestSchema'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  schedule_id:
+                    type: integer
+                  success:
+                    type: boolean
+                type: object
+          description: تم إنشاء الجدول بنجاح
+      security:
+      - session_auth: []
+      summary: إنشاء جدول تقرير جديد
+      tags:
+      - Report Scheduling
+  /api/schedules/{schedule_id}:
+    delete:
+      description: حذف جدول تقرير دوري
+      parameters:
+      - description: معرف الجدول
+        in: path
+        name: schedule_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  success:
+                    type: boolean
+                type: object
+          description: تم حذف الجدول بنجاح
+      security:
+      - session_auth: []
+      summary: حذف جدول تقرير
+      tags:
+      - Report Scheduling
+  /check/{serial_number}:
+    get:
+      description: التحقق من حالة تفعيل جهاز باستخدام الرقم التسلسلي
+      parameters:
+      - description: الرقم التسلسلي للجهاز
+        example: SN123456789
+        in: path
+        name: serial_number
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  activated:
+                    example: true
+                    type: boolean
+                  activation_date:
+                    format: date-time
+                    type: string
+                  device_info:
+                    $ref: '#/components/schemas/DeviceInfoSchema'
+                type: object
+          description: معلومات حالة التفعيل
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseSchema'
+          description: الجهاز غير موجود
+      summary: فحص حالة تفعيل جهاز
+      tags:
+      - Device Activation
+servers:
+- description: خادم التطوير المحلي
+  url: http://127.0.0.1:5000
+- description: خادم الإنتاج
+  url: https://api.rif-activator.com

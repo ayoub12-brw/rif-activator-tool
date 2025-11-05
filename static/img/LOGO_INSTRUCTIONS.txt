@@ -1,0 +1,8 @@
+Place your site logo image here as `logo.png`.
+
+- Recommended size: at least 200x200 PNG (transparent background recommended).
+- Path used by templates: `static/img/logo.png`.
+- If you prefer an SVG, you can keep `logo.svg` in the same directory. The template points to `logo.png` by default.
+
+Example (PowerShell):
+Copy-Item 'C:\path\to\your\logo.png' -Destination '.\static\img\logo.png' -Force

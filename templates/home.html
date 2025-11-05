@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}RIF ACTIVATOR - Home{% endblock %}
+
+{% block content %}
+<header class="hero text-light">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h1 class="display-5">RIF ACTIVATOR</h1>
+        <p class="lead muted">Professional iCloud bypass and activation services — fast, reliable, and easy to use.</p>
+        <div class="d-flex gap-2 mt-4">
+          <a class="btn btn-primary btn-lg" href="/">Get started</a>
+          <a class="btn btn-outline-light btn-lg" href="#features">Learn more</a>
+        </div>
+      </div>
+      <div class="col-md-6 text-center">
+        <div class="card card-dark p-4">
+          <h5 class="mb-3">Quick Register</h5>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div></div>
+          </div>
+          <form id="heroRegister" class="d-flex gap-2 flex-column" autocomplete="off">
+              <div class="d-flex gap-2">
+              <input id="heroSerial" class="form-control" placeholder="Enter Serial Number" required>
+              <input id="heroTx" class="form-control" placeholder="Payment TX hash (5 USDT)">
+            </div>
+            <div class="d-flex gap-2 mt-2 align-items-center">
+              <label class="mb-0">Chain:</label>
+              <select id="heroChain" class="form-select form-select-sm" style="width:180px">
+                <option value="bsc" selected>BSC (Binance)</option>
+                <option value="eth">ETH</option>
+                <option value="free">Free (no payment)</option>
+              </select>
+            </div>
+            <div class="d-flex gap-2 align-items-center">
+                <button class="btn btn-success d-flex align-items-center" id="heroRegisterBtn" type="submit">
+                  <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true" style="display:none" id="heroSpinner"></span>
+                  <span id="heroBtnText">Register (Pay 5 USDT)</span>
+                </button>
+                <div class="ms-2 text-start">
+                  <div class="muted small">Send 5 USDT (BEP20 on BSC) to</div>
+                  <div class="d-flex align-items-center mt-1">
+                    <code id="paymentAddr" style="background:#0b1116;padding:6px;border-radius:6px">{{ payment_address or 'PAYMENT_ADDRESS' }}</code>
+                    <button id="copyPaymentAddr" class="btn btn-outline-light btn-sm ms-2" type="button">Copy</button>
+                  </div>
+                  <div class="muted small mt-1">Then paste the TX hash (example: <code>0x...abcdef</code>) into the field above.</div>
+                </div>
+              </div>
+          </form>
+          {% if session.get('admin') %}
+          <div class="mt-3 text-start">
+            <small class="muted">Recent registrations:</small>
+            <ul class="mt-2">
+              {% for s in recent %}
+              <li style="font-size:.9rem">{{ s }}</li>
+              {% else %}
+              <li class="muted">No recent registrations</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          <!-- Recent payments removed from public home page by request -->
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="features" class="container my-5">
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card card-dark p-3 h-100">
+        <h5>Fast Activation</h5>
+        <p class="muted mb-0">Handles A12+ devices with optimized flows and priority support.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card card-dark p-3 h-100">
+        <h5>Full Support</h5>
+        <p class="muted mb-0">24/7 assistance and step-by-step guidance for every activation.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card card-dark p-3 h-100">
+        <h5>Secure</h5>
+        <p class="muted mb-0">We take privacy seriously and keep your registrations safe.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% extends 'base.html' %}
+
+  {% block title %}Admin - RiF Activator A12+{% endblock %}
+
+    {% block content %}
+      <div class="container py-5">
+        <div class="row">
+          <div class="col-lg-10 mx-auto">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+              <h3 class="mb-0">Admin - Registered Serials</h3>
+              <div>
+                <a id="export-link" class="btn btn-sm btn-outline-light me-2" href="#">Export CSV</a>
+                <button id="delete-selected" class="btn btn-sm btn-danger me-2">Delete selected</button>
+                <button id="delete-all-btn" class="btn btn-sm btn-danger me-2">Delete ALL</button>
+                <button id="logoutBtn" class="btn btn-sm btn-secondary">Sign out</button>
+              </div>
+            </div>
+
+            <div class="card card-dark p-3 mb-3">
+              <ul class="nav nav-tabs mb-3" id="adminTabs">
+                <li class="nav-item"><a class="nav-link active" data-tab="serials" href="#">Serials</a></li>
+                <li class="nav-item"><a class="nav-link" data-tab="activations" href="#">Activations</a></li>
+                <li class="nav-item"><a class="nav-link" data-tab="api_keys" href="#">API Keys</a></li>
+              </ul>
+              <div class="d-flex gap-2 align-items-center mb-2">
+                <input id="admin-search" class="form-control form-control-sm" placeholder="Search...">
+                <select id="per-page" class="form-select form-select-sm w-auto">
+                  <option value="10">10</option>
+                  <option value="20" selected>20</option>
+                  <option value="50">50</option>
+                </select>
+                <button id="refreshBtn" class="btn btn-sm btn-primary">🔄 Refresh</button>
+              </div>
+
+              <div id="adminArea">
+                <div id="tab-serials">
+                  <div class="table-responsive">
+                    <table class="table table-dark table-hover">
+                      <thead>
+                        <tr>
+                          <th><input type="checkbox" id="select-all" /></th>
+                          <th>Serial Number</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="admin-table-body">
+                        <!-- serials rows rendered by static/js/app.js -->
+                      </tbody>
+                    </table>
+                  </div>
+                  <nav>
+                    <ul id="pagination-controls" class="pagination pagination-sm justify-content-center mt-3">
+                      <!-- Pagination buttons rendered by JavaScript -->
+                    </ul>
+                  </nav>
+                </div>
+                <div id="tab-activations" style="display:none">
+                  <h5>Activations Log</h5>
+                  <div id="activationsList">Loading...</div>
+                </div>
+                <div id="tab-api_keys" style="display:none">
+                  <h5>API Keys</h5>
+                  <div class="d-flex gap-2 mb-2">
+                    <input id="newApiLabel" class="form-control form-control-sm" placeholder="Key label">
+                    <select id="newApiScope" class="form-select form-select-sm w-auto"><option value="default">default</option></select>
+                    <button id="createApiBtn" class="btn btn-sm btn-success">Create</button>
+                  </div>
+                  <div id="apiKeysList">Loading...</div>
+                </div>
+              </div>
+
+              <div class="card card-dark p-3 mt-3">
+                <h5>Pending Payments</h5>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div><small class="muted">Pending payments queue</small></div>
+                  <div>
+                    <button id="cleanupPaymentsBtn" class="btn btn-sm btn-outline-warning">Cleanup Bad Payments</button>
+                  </div>
+                </div>
+                <div id="paymentsArea">
+                  <!-- filled by JS -->
+                </div>
+              </div>
+
+              <nav aria-label="Page navigation" class="mt-3">
+                <ul id="pagination-controls" class="pagination"></ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('logoutBtn')?.addEventListener('click', async function(){
+  try{
+    await fetch('/logout', { method: 'POST' });
+  }catch(e){ console.error(e); }
+  // reload to show login page
+  window.location.href = '/admin';
+});
+
+document.getElementById('delete-all-btn')?.addEventListener('click', async function(){
+  const total = document.querySelectorAll('#admin-table-body tr').length;
+  if(total === 0){
+    alert('No serials to delete');
+    return;
+  }
+  const confirmMsg = `⚠️ WARNING: This will DELETE ALL ${total} serials!\n\nType "DELETE ALL" to confirm:`;
+  const userInput = prompt(confirmMsg);
+  if(userInput !== 'DELETE ALL'){
+    alert('Cancelled - wrong confirmation text');
+    return;
+  }
+  try{
+    const res = await fetch('/api/admin/delete_all_serials', { method: 'POST' });
+    const data = await res.json();
+    if(data.success){
+      alert(`✅ Successfully deleted ${data.deleted} serials`);
+      window.location.reload();
+    } else {
+      alert('❌ Failed: ' + (data.message || 'Unknown error'));
+    }
+  }catch(e){ 
+    console.error(e); 
+    alert('❌ Error: ' + e.message);
+  }
+});
+</script>
+{% endblock %}

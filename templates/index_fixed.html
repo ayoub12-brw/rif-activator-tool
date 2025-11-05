@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}RIF ACTIVATOR - Home{% endblock %}
+
+{% block content %}
+<header class="hero text-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1 class="display-6">Welcome to<br><strong>RIF ACTIVATOR</strong></h1>
+                <p class="lead muted">Advanced and reliable iCloud Bypass Software. Easy to use, powerful, and designed for everyone.</p>
+                <div class="mt-4">
+                    <a class="btn btn-lg btn-primary me-2" href="#">DOWNLOAD NOW</a>
+                    <a class="btn btn-lg btn-outline-light" href="#">Join the community</a>
+                </div>
+                <p class="mt-4"><small class="muted">Logo de RIF Activator</small></p>
+            </div>
+            <div class="col-lg-5">
+                <div class="card card-dark p-3">
+                    <h5>Our Services</h5>
+                    <p class="muted">We offer professional plans to activate, analyze, and manage your no-signal devices with full support and advanced features.</p>
+                    <h6 class="mt-3">POPULAR</h6>
+                    <h5>A12+ No Signal – Untethered</h5>
+                    <p class="muted mb-1"><strong>Supported iPhone Models:</strong><br>XR to 16 Pro Max</p>
+                    <p class="muted mb-1"><strong>Supported Firmware:</strong><br>18.7–26.0.1</p>
+                    <p class="mb-0"><strong>24/7 Priority Support</strong><br><small class="muted">Get help when you need it</small></p>
+                    <div class="mt-3">
+                        <a class="btn btn-sm btn-success" href="#">Start now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container my-5">
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card card-dark p-3">
+                <h5>Register Serial</h5>
+                <div id="alertPlaceholder"></div>
+                <form id="registerForm" class="d-flex gap-2" autocomplete="off">
+                    <input id="serialInput" name="serial" class="form-control" placeholder="Enter Serial Number" required>
+                    <button id="registerBtn" class="btn btn-primary">Register</button>
+                </form>
+                <div class="mt-2">
+                    <button id="refreshBtn" class="btn btn-sm btn-outline-light">Refresh List</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <div class="card card-dark p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Registered Serials</h5>
+                    <input id="searchInput" class="form-control form-control-sm w-50" placeholder="Search..." />
+                </div>
+                <ul id="serialList" class="list-unstyled mt-3">
+                    {% for serial in serials %}
+                    <li class="d-flex justify-content-between align-items-center py-2 px-2 mb-2 rounded" style="background:#0b1116">
+                        <span class="serial-text">{{ serial }}</span>
+                        <button class="btn btn-sm btn-outline-danger delete-btn" data-serial="{{ serial }}">Delete</button>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

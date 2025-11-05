@@ -1,0 +1,39 @@
+{
+  "device_info": {
+    "product_type": "iPhone11,2",
+    "marketing_name": "iPhone XS",
+    "device_class": "iPhone",
+    "model_number": "A2098",
+    "ios_version": "18.7.1",
+    "build_version": "22H31",
+    "system_name": "iPhone OS",
+    "ui_kit_name": "iOS",
+    "chip_id": "t8020",
+    "cpu_architecture": "arm64e",
+    "bootloader": "iBoot-11881.140.96",
+    "artwork_info": {
+      "ArtworkDeviceIdiom": "phone",
+      "ArtworkDeviceProductDescription": "iPhone XS",
+      "ArtworkDeviceScaleFactor": 3,
+      "ArtworkDeviceSubType": 2436,
+      "ArtworkDisplayGamut": "P3",
+      "ArtworkDynamicDisplayMode": "0",
+      "CompatibleDeviceFallback": "iPhone10,3",
+      "DevicePerformanceMemoryClass": 3,
+      "GraphicsFeatureSetClass": "APPLE5",
+      "GraphicsFeatureSetFallbacks": "APPLE4:APPLE3:APPLE3v1:APPLE2:APPLE1:GLES2,0"
+    },
+    "display_gamut": "P3",
+    "device_uuid": "259F795A-5AF9-4CF1-B8AA-15CC0178DAD1",
+    "platform_uuid": "D2434634-9849-11F0-9598-AE68C71860E3",
+    "region_code": "J/A",
+    "baseband_version": "Unknown"
+  },
+  "compatibility": {
+    "supported_device": true,
+    "ios_in_range": true,
+    "bypass_compatible": true,
+    "activation_ready": true
+  },
+  "analysis_timestamp": 1762303163.5189438
+}

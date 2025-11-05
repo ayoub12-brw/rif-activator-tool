@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 لوحة التقارير والإحصائيات | RiF Activator A12+</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            --success-gradient: linear-gradient(135deg, #00C9FF 0%, #92FE9D 100%);
+            --danger-gradient: linear-gradient(135deg, #FC466B 0%, #3F5EFB 100%);
+            --warning-gradient: linear-gradient(135deg, #FDBB2D 0%, #22C1C3 100%);
+            --info-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --shadow-light: 0 8px 32px rgba(31, 38, 135, 0.37);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-primary);
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: #4CAF50;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .nav-link.active {
+            background: var(--secondary-gradient);
+            color: white;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .filter-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-light);
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-label {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .filter-input {
+            padding: 0.8rem 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-input:focus {
+            outline: none;
+            border-color: rgba(76, 175, 80, 0.8);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-filter {
+            background: var(--secondary-gradient);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .btn-filter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.4);
+        }
+
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--secondary-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #4CAF50;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .stat-change {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .stat-change.positive {
+            color: #4CAF50;
+        }
+
+        .stat-change.negative {
+            color: #f44336;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .chart-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: var(--shadow-light);
+        }
+
+        .chart-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .chart-icon {
+            font-size: 1.5rem;
+            color: #4CAF50;
+        }
+
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .chart-canvas {
+            position: relative;
+            height: 300px;
+        }
+
+        .data-table {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: var(--shadow-light);
+            margin-bottom: 2rem;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .table-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .table-icon {
+            font-size: 1.5rem;
+            color: #4CAF50;
+        }
+
+        .table-title h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-export {
+            background: var(--info-gradient);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-export:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .data-table-wrapper {
+            max-height: 400px;
+            overflow-y: auto;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .data-table table {
+            width: 100%;
+            border-collapse: collapse;
+            color: white;
+        }
+
+        .data-table th {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            text-align: right;
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .data-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .loading {
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+
+        .loading i {
+            font-size: 2rem;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .export-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="/" class="logo">
+                <i class="fas fa-chart-line"></i>
+                <span>RiF Activator A12+</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">الرئيسية</a>
+                <a href="/check_device" class="nav-link">فحص الجهاز</a>
+                <a href="/reports" class="nav-link active">التقارير</a>
+                <a href="/admin" class="nav-link">لوحة التحكم</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <section class="page-header">
+            <h1 class="page-title">📊 لوحة التقارير والإحصائيات</h1>
+            <p class="page-subtitle">تحليل شامل لبيانات النظام والتفعيلات</p>
+        </section>
+
+        <section class="filter-section">
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label class="filter-label">من تاريخ</label>
+                    <input type="date" class="filter-input" id="fromDate">
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">إلى تاريخ</label>
+                    <input type="date" class="filter-input" id="toDate">
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">نوع التقرير</label>
+                    <select class="filter-input" id="reportType">
+                        <option value="all">جميع البيانات</option>
+                        <option value="activations">التفعيلات فقط</option>
+                        <option value="payments">المدفوعات فقط</option>
+                        <option value="revenue">الإيرادات</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <button class="btn-filter" onclick="updateReports()">
+                        <i class="fas fa-filter"></i>
+                        <span>تطبيق الفلترة</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-overview">
+            <div class="stat-card">
+                <i class="fas fa-mobile-alt stat-icon"></i>
+                <div class="stat-value" id="totalActivations">-</div>
+                <div class="stat-label">إجمالي التفعيلات</div>
+                <div class="stat-change positive" id="activationsChange">+0%</div>
+            </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-dollar-sign stat-icon"></i>
+                <div class="stat-value" id="totalRevenue">-</div>
+                <div class="stat-label">إجمالي الإيرادات</div>
+                <div class="stat-change positive" id="revenueChange">+0%</div>
+            </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-chart-line stat-icon"></i>
+                <div class="stat-value" id="avgDaily">-</div>
+                <div class="stat-label">متوسط التفعيلات اليومية</div>
+                <div class="stat-change positive" id="avgDailyChange">+0%</div>
+            </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-percentage stat-icon"></i>
+                <div class="stat-value" id="successRate">-</div>
+                <div class="stat-label">معدل نجاح التفعيل</div>
+                <div class="stat-change positive" id="successRateChange">+0%</div>
+            </div>
+        </section>
+
+        <section class="charts-grid">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <i class="fas fa-chart-area chart-icon"></i>
+                    <h3 class="chart-title">التفعيلات عبر الزمن</h3>
+                </div>
+                <div class="chart-canvas">
+                    <canvas id="activationsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <i class="fas fa-chart-pie chart-icon"></i>
+                    <h3 class="chart-title">توزيع أنواع الأجهزة</h3>
+                </div>
+                <div class="chart-canvas">
+                    <canvas id="devicesChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <i class="fas fa-chart-bar chart-icon"></i>
+                    <h3 class="chart-title">الإيرادات الشهرية</h3>
+                </div>
+                <div class="chart-canvas">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <i class="fas fa-clock chart-icon"></i>
+                    <h3 class="chart-title">أوقات الذروة</h3>
+                </div>
+                <div class="chart-canvas">
+                    <canvas id="peakHoursChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="data-table">
+            <div class="table-header">
+                <div class="table-title">
+                    <i class="fas fa-table table-icon"></i>
+                    <h3>بيانات التفعيلات الحديثة</h3>
+                </div>
+                <div class="export-buttons">
+                    <button class="btn-export" onclick="exportToCSV()">
+                        <i class="fas fa-file-csv"></i>
+                        CSV
+                    </button>
+                    <button class="btn-export" onclick="exportToPDF()">
+                        <i class="fas fa-file-pdf"></i>
+                        PDF
+                    </button>
+                    <button class="btn-export" onclick="exportToExcel()">
+                        <i class="fas fa-file-excel"></i>
+                        Excel
+                    </button>
+                </div>
+            </div>
+            
+            <div class="data-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الرقم التسلسلي</th>
+                            <th>نوع الجهاز</th>
+                            <th>المبلغ</th>
+                            <th>الحالة</th>
+                            <th>التاريخ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activationsTableBody">
+                        <tr>
+                            <td colspan="5">
+                                <div class="loading">
+                                    <i class="fas fa-spinner"></i>
+                                    <p>جاري تحميل البيانات...</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let activationsChart, devicesChart, revenueChart, peakHoursChart;
+
+        // Initialize date inputs
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+            
+            document.getElementById('fromDate').value = lastMonth.toISOString().split('T')[0];
+            document.getElementById('toDate').value = today.toISOString().split('T')[0];
+            
+            loadReportsData();
+        });
+
+        async function loadReportsData() {
+            try {
+                // Load overview stats
+                await loadOverviewStats();
+                
+                // Initialize charts
+                await initializeCharts();
+                
+                // Load recent activations table
+                await loadActivationsTable();
+                
+            } catch (error) {
+                console.error('Error loading reports data:', error);
+            }
+        }
+
+        async function loadOverviewStats() {
+            try {
+                const response = await fetch('/api/admin/dashboard_stats');
+                const stats = await response.json();
+                
+                document.getElementById('totalActivations').textContent = stats.total_activations || '0';
+                document.getElementById('totalRevenue').textContent = `$${stats.total_revenue || '0'}`;
+                document.getElementById('avgDaily').textContent = Math.round((stats.total_activations || 0) / 30);
+                document.getElementById('successRate').textContent = '98.5%';
+                
+                // Mock percentage changes (in real app, calculate from historical data)
+                document.getElementById('activationsChange').textContent = '+12.5%';
+                document.getElementById('revenueChange').textContent = '+8.7%';
+                document.getElementById('avgDailyChange').textContent = '+15.2%';
+                document.getElementById('successRateChange').textContent = '+2.1%';
+                
+            } catch (error) {
+                console.error('Error loading overview stats:', error);
+            }
+        }
+
+        async function initializeCharts() {
+            // Activations over time chart
+            const activationsCtx = document.getElementById('activationsChart').getContext('2d');
+            activationsChart = new Chart(activationsCtx, {
+                type: 'line',
+                data: {
+                    labels: generateDateLabels(30),
+                    datasets: [{
+                        label: 'التفعيلات اليومية',
+                        data: generateMockData(30, 5, 25),
+                        borderColor: '#4CAF50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { color: 'white' }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: 'white' },
+                            grid: { color: 'rgba(255,255,255,0.1)' }
+                        },
+                        y: {
+                            ticks: { color: 'white' },
+                            grid: { color: 'rgba(255,255,255,0.1)' }
+                        }
+                    }
+                }
+            });
+
+            // Device types pie chart
+            const devicesCtx = document.getElementById('devicesChart').getContext('2d');
+            devicesChart = new Chart(devicesCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['iPhone 14', 'iPhone 13', 'iPhone 12', 'iPhone 11', 'أخرى'],
+                    datasets: [{
+                        data: [35, 25, 20, 15, 5],
+                        backgroundColor: [
+                            '#4CAF50',
+                            '#2196F3',
+                            '#FF9800',
+                            '#E91E63',
+                            '#9C27B0'
+                        ],
+                        borderWidth: 2,
+                        borderColor: 'rgba(255,255,255,0.2)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { 
+                                color: 'white',
+                                padding: 20
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Revenue bar chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            revenueChart = new Chart(revenueCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'],
+                    datasets: [{
+                        label: 'الإيرادات ($)',
+                        data: [1200, 1900, 3000, 2500, 2800, 3200],
+                        backgroundColor: 'rgba(76, 175, 80, 0.8)',
+                        borderColor: '#4CAF50',
+                        borderWidth: 2,
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { color: 'white' }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: 'white' },
+                            grid: { color: 'rgba(255,255,255,0.1)' }
+                        },
+                        y: {
+                            ticks: { color: 'white' },
+                            grid: { color: 'rgba(255,255,255,0.1)' }
+                        }
+                    }
+                }
+            });
+
+            // Peak hours chart
+            const peakCtx = document.getElementById('peakHoursChart').getContext('2d');
+            peakHoursChart = new Chart(peakCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+                    datasets: [{
+                        label: 'التفعيلات حسب الوقت',
+                        data: [12, 8, 25, 45, 38, 22],
+                        borderColor: '#4CAF50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                        pointBackgroundColor: '#4CAF50',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#4CAF50'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { color: 'white' }
+                        }
+                    },
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(255,255,255,0.1)' },
+                            grid: { color: 'rgba(255,255,255,0.1)' },
+                            pointLabels: { color: 'white' },
+                            ticks: { 
+                                color: 'white',
+                                backdropColor: 'transparent'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        async function loadActivationsTable() {
+            try {
+                const response = await fetch('/api/admin/activations');
+                const data = await response.json();
+                
+                const tableBody = document.getElementById('activationsTableBody');
+                const activations = data.activations || [];
+                
+                if (activations.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: rgba(255,255,255,0.6); padding: 2rem;">
+                                لا توجد بيانات تفعيل متاحة
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                tableBody.innerHTML = activations.map(activation => `
+                    <tr>
+                        <td style="font-family: monospace; font-weight: 600;">${activation.serial}</td>
+                        <td>${activation.device_model || 'غير محدد'}</td>
+                        <td>$${activation.amount || '15.00'}</td>
+                        <td>
+                            <span style="background: ${activation.verified ? '#4CAF50' : '#ff9800'}; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; font-weight: 600;">
+                                ${activation.verified ? 'مؤكد' : 'معلق'}
+                            </span>
+                        </td>
+                        <td>${new Date(activation.timestamp).toLocaleDateString('ar-EG')}</td>
+                    </tr>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Error loading activations table:', error);
+                document.getElementById('activationsTableBody').innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: #f44336; padding: 2rem;">
+                            خطأ في تحميل البيانات
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function updateReports() {
+            const fromDate = document.getElementById('fromDate').value;
+            const toDate = document.getElementById('toDate').value;
+            const reportType = document.getElementById('reportType').value;
+            
+            console.log('Updating reports with filters:', { fromDate, toDate, reportType });
+            
+            // Reload data with filters (in real app, pass these parameters to API)
+            loadReportsData();
+        }
+
+        // Export functions
+        function exportToCSV() {
+            alert('تصدير CSV - سيتم تنفيذ هذه الميزة قريباً');
+        }
+
+        function exportToPDF() {
+            alert('تصدير PDF - سيتم تنفيذ هذه الميزة قريباً');
+        }
+
+        function exportToExcel() {
+            alert('تصدير Excel - سيتم تنفيذ هذه الميزة قريباً');
+        }
+
+        // Utility functions
+        function generateDateLabels(days) {
+            const labels = [];
+            const today = new Date();
+            
+            for (let i = days - 1; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                labels.push(date.toLocaleDateString('ar-EG', { month: 'short', day: 'numeric' }));
+            }
+            
+            return labels;
+        }
+
+        function generateMockData(length, min, max) {
+            return Array.from({ length }, () => Math.floor(Math.random() * (max - min + 1)) + min);
+        }
+    </script>
+</body>
+</html>

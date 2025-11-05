@@ -1,0 +1,21 @@
+{
+  "project_name": "RiF Activator A12+",
+  "cleaned_date": "2025-11-05",
+  "remaining_files": 1829,
+  "important_files": {
+    "main_app": "app.py",
+    "gui_app": "device_ui.py",
+    "server": "main.py",
+    "database": "serials.db",
+    "device_parser": "mobile_gestalt_parser.py",
+    "device_reader": "read_real_device.py",
+    "system_test": "system_test.py"
+  },
+  "key_features": [
+    "آمن 100% - لا تعديل في النظام",
+    "يدعم iPhone XS و iOS 18.7.1+",
+    "واجهة ويب وسطح مكتب",
+    "قراءة معلومات الجهاز الحقيقي",
+    "تفعيل عبر الخادم الآمن"
+  ]
+}

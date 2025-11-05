@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول الآمن - RiF Activator A12+</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-light: rgba(255, 255, 255, 0.9);
+            --dark-bg: #0f0f23;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%);
+            animation: floatingGradient 15s ease-in-out infinite alternate;
+        }
+        
+        @keyframes floatingGradient {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            100% { transform: translate(-20px, -20px) rotate(10deg) scale(1.05); }
+        }
+        
+        /* Login Form */
+        .login-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            max-width: 450px;
+            width: 100%;
+            position: relative;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 245, 160, 0.1);
+            border: 1px solid rgba(0, 245, 160, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #00f5a0;
+            margin-bottom: 1rem;
+        }
+        
+        .form-control {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            color: white;
+        }
+        
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            z-index: 2;
+            font-size: 1.1rem;
+        }
+        
+        .form-control.with-icon {
+            padding-left: 3rem;
+        }
+        
+        .btn-login {
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 12px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            color: white;
+            width: 100%;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+        
+        .btn-login:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .alert {
+            border: none;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .alert-danger {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            color: #ff6b6b;
+        }
+        
+        .alert-success {
+            background: rgba(46, 213, 115, 0.1);
+            border: 1px solid rgba(46, 213, 115, 0.3);
+            color: #2ed573;
+        }
+        
+        .alert-info {
+            background: rgba(52, 152, 219, 0.1);
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            color: #3498db;
+        }
+        
+        .two-factor-section {
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .qr-code-container {
+            text-align: center;
+            margin: 1rem 0;
+        }
+        
+        .qr-code {
+            max-width: 200px;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+        }
+        
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            margin: 1rem 0;
+        }
+        
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .footer-links {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #667eea;
+        }
+        
+        /* Security Features */
+        .security-features {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .security-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .security-feature i {
+            color: #00f5a0;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="login-container">
+                    <div class="login-header">
+                        <div class="logo">
+                            <i class="bi bi-shield-lock-fill me-2"></i>
+                            RiF Activator A12+
+                        </div>
+                        <div class="security-badge">
+                            <i class="bi bi-shield-check"></i>
+                            تسجيل دخول آمن
+                        </div>
+                        <p class="text-muted mb-0">لوحة الإدارة المتقدمة</p>
+                    </div>
+                    
+                    <!-- Alerts -->
+                    <div id="alertContainer"></div>
+                    
+                    <!-- Loading Spinner -->
+                    <div class="loading-spinner" id="loadingSpinner">
+                        <div class="spinner"></div>
+                        <p class="mt-2 mb-0">جاري المعالجة...</p>
+                    </div>
+                    
+                    <!-- Login Form -->
+                    <form id="loginForm">
+                        <div class="input-group">
+                            <i class="bi bi-person-fill input-icon"></i>
+                            <input type="text" 
+                                   class="form-control with-icon" 
+                                   id="username" 
+                                   placeholder="اسم المستخدم"
+                                   required
+                                   autocomplete="username">
+                        </div>
+                        
+                        <div class="input-group">
+                            <i class="bi bi-lock-fill input-icon"></i>
+                            <input type="password" 
+                                   class="form-control with-icon" 
+                                   id="password" 
+                                   placeholder="كلمة المرور"
+                                   required
+                                   autocomplete="current-password">
+                        </div>
+                        
+                        <!-- 2FA Section -->
+                        <div class="two-factor-section" id="twoFactorSection">
+                            <div class="input-group">
+                                <i class="bi bi-key-fill input-icon"></i>
+                                <input type="text" 
+                                       class="form-control with-icon" 
+                                       id="totpToken" 
+                                       placeholder="رمز المصادقة الثنائية (6 أرقام)"
+                                       maxlength="6"
+                                       pattern="[0-9]{6}"
+                                       autocomplete="one-time-code">
+                            </div>
+                            
+                            <div class="alert alert-info">
+                                <i class="bi bi-info-circle me-2"></i>
+                                أدخل الرمز من تطبيق Google Authenticator أو أي تطبيق TOTP آخر
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-login" id="loginBtn">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>
+                            تسجيل الدخول
+                        </button>
+                    </form>
+                    
+                    <!-- Security Features -->
+                    <div class="security-features">
+                        <div class="security-feature">
+                            <i class="bi bi-shield-check"></i>
+                            <span>حماية من هجمات القوة الغاشمة</span>
+                        </div>
+                        <div class="security-feature">
+                            <i class="bi bi-key"></i>
+                            <span>دعم المصادقة الثنائية (2FA)</span>
+                        </div>
+                        <div class="security-feature">
+                            <i class="bi bi-clock-history"></i>
+                            <span>إدارة جلسات آمنة</span>
+                        </div>
+                        <div class="security-feature">
+                            <i class="bi bi-graph-up"></i>
+                            <span>مراقبة النشاط في الوقت الفعلي</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Footer -->
+                    <div class="footer-links">
+                        <a href="/">العودة للصفحة الرئيسية</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        class SecureLogin {
+            constructor() {
+                this.loginForm = document.getElementById('loginForm');
+                this.loadingSpinner = document.getElementById('loadingSpinner');
+                this.alertContainer = document.getElementById('alertContainer');
+                this.twoFactorSection = document.getElementById('twoFactorSection');
+                this.loginBtn = document.getElementById('loginBtn');
+                this.requires2FA = false;
+                
+                this.initEventListeners();
+            }
+            
+            initEventListeners() {
+                this.loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleLogin();
+                });
+                
+                // Auto-format TOTP input
+                document.getElementById('totpToken').addEventListener('input', (e) => {
+                    e.target.value = e.target.value.replace(/\D/g, '').substring(0, 6);
+                });
+            }
+            
+            showAlert(message, type = 'danger') {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `alert alert-${type}`;
+                
+                const icon = type === 'success' ? 'check-circle' : 
+                           type === 'info' ? 'info-circle' : 'exclamation-triangle';
+                
+                alertDiv.innerHTML = `
+                    <i class="bi bi-${icon} me-2"></i>
+                    ${message}
+                `;
+                
+                this.alertContainer.innerHTML = '';
+                this.alertContainer.appendChild(alertDiv);
+                
+                // Auto-hide after 5 seconds
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 5000);
+            }
+            
+            showLoading(show = true) {
+                this.loadingSpinner.style.display = show ? 'block' : 'none';
+                this.loginBtn.disabled = show;
+                
+                if (show) {
+                    this.loginBtn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>جاري المعالجة...';
+                } else {
+                    this.loginBtn.innerHTML = '<i class="bi bi-box-arrow-in-right me-2"></i>تسجيل الدخول';
+                }
+            }
+            
+            show2FASection(show = true) {
+                this.twoFactorSection.style.display = show ? 'block' : 'none';
+                this.requires2FA = show;
+                
+                if (show) {
+                    document.getElementById('totpToken').focus();
+                    this.loginBtn.innerHTML = '<i class="bi bi-key me-2"></i>تأكيد الرمز';
+                } else {
+                    this.loginBtn.innerHTML = '<i class="bi bi-box-arrow-in-right me-2"></i>تسجيل الدخول';
+                }
+            }
+            
+            async handleLogin() {
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                const totpToken = document.getElementById('totpToken').value.trim();
+                
+                if (!username || !password) {
+                    this.showAlert('يرجى إدخال اسم المستخدم وكلمة المرور');
+                    return;
+                }
+                
+                if (this.requires2FA && !totpToken) {
+                    this.showAlert('يرجى إدخال رمز المصادقة الثنائية');
+                    return;
+                }
+                
+                this.showLoading(true);
+                this.alertContainer.innerHTML = '';
+                
+                try {
+                    const response = await fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            username: username,
+                            password: password,
+                            totp_token: totpToken
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.status === 202) {
+                        // 2FA required
+                        this.show2FASection(true);
+                        this.showAlert('أدخل رمز المصادقة الثنائية للمتابعة', 'info');
+                    } else if (data.success) {
+                        // Login successful
+                        this.showAlert('تم تسجيل الدخول بنجاح!', 'success');
+                        
+                        // Store session token if provided
+                        if (data.session_token) {
+                            localStorage.setItem('auth_token', data.session_token);
+                        }
+                        
+                        // Redirect to admin panel
+                        setTimeout(() => {
+                            window.location.href = '/admin';
+                        }, 1000);
+                    } else {
+                        // Login failed
+                        this.showAlert(data.error || 'فشل في تسجيل الدخول');
+                        this.show2FASection(false);
+                    }
+                    
+                } catch (error) {
+                    console.error('Login error:', error);
+                    this.showAlert('حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى');
+                } finally {
+                    this.showLoading(false);
+                }
+            }
+        }
+        
+        // Initialize secure login when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            new SecureLogin();
+            
+            // Focus on username field
+            document.getElementById('username').focus();
+            
+            // Check if already logged in
+            const authToken = localStorage.getItem('auth_token');
+            if (authToken) {
+                // Validate token and redirect if valid
+                fetch('/api/is_admin', {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.admin) {
+                        window.location.href = '/admin';
+                    }
+                })
+                .catch(() => {
+                    // Token invalid, remove it
+                    localStorage.removeItem('auth_token');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
