@@ -106,44 +106,48 @@ init_database()
 
 @app.route('/')
 def index():
-    """الصفحة الرئيسية"""
+    """الصفحة الرئيسية المحسنة"""
     try:
-        return render_template('index.html')
+        return render_template('index_enhanced_v2.html')
     except:
         return jsonify({
             'message': 'RiF Activator A12+ Server is Running!',
             'status': 'active',
-            'version': '2.0.0',
+            'version': '2.6.0',
             'endpoints': {
+                'main_page': '/',
                 'check_device': '/check_device',
+                'admin': '/admin',
+                'reports': '/reports',
+                'sitemap': '/sitemap',
                 'api_stats': '/api/live_stats',
-                'admin': '/admin'
+                'api_docs': '/api/docs'
             }
         })
 
 @app.route('/check_device')
 def check_device_page():
-    """صفحة فحص الجهاز"""
+    """صفحة فحص الجهاز المحسنة"""
     try:
-        return render_template('check_device.html')
+        return render_template('check_device_enhanced.html')
     except:
         return jsonify({'message': 'Device check page - use POST /api/check_device'})
 
 @app.route('/admin')
 def admin_page():
-    """صفحة الإدارة"""
+    """صفحة الإدارة المحسنة"""
     try:
-        return render_template('admin.html')
+        return render_template('admin_enhanced_v2.html')
     except:
         return jsonify({'message': 'Admin panel - authentication required'})
 
 @app.route('/reports')
 def reports_page():
-    """صفحة التقارير"""
+    """صفحة التقارير المحسنة"""
     try:
-        return render_template('reports.html')
+        return render_template('reports_dashboard_enhanced.html')
     except:
-        return jsonify({'message': 'Reports page'})
+        return jsonify({'message': 'Reports page - comprehensive analytics'})
 
 @app.route('/api/check_device', methods=['POST'])
 def api_check_device():
@@ -336,6 +340,21 @@ def api_device_stats():
 def sitemap():
     """خريطة الموقع - جميع الصفحات المتاحة"""
     return render_template('sitemap.html')
+
+@app.route('/about')
+def about_page():
+    """صفحة حول التطبيق"""
+    return render_template('about.html')
+
+@app.route('/help')
+def help_page():
+    """صفحة المساعدة"""
+    return render_template('help.html')
+
+@app.route('/contact')
+def contact_page():
+    """صفحة التواصل"""
+    return render_template('contact.html')
 
 @app.route('/api/sitemap')
 def api_sitemap():

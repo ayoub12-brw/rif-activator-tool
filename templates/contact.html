@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تواصل معنا | RiF Activator A12+</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .back-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-icon {
+            font-size: 3.5rem;
+            color: #4FC3F7;
+            margin-bottom: 20px;
+        }
+
+        .contact-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .contact-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            color: #4FC3F7;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .contact-button {
+            background: linear-gradient(45deg, #4FC3F7, #29B6F6);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .contact-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 195, 247, 0.4);
+            color: white;
+        }
+
+        .form-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-title {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4FC3F7;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            background: linear-gradient(45deg, #4FC3F7, #29B6F6);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 195, 247, 0.4);
+        }
+
+        .info-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .info-title {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .info-content {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            color: #4FC3F7;
+        }
+
+        .response-time {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-button"><i class="fas fa-arrow-right"></i> العودة للصفحة الرئيسية</a>
+        
+        <h1>📞 تواصل معنا</h1>
+        <p class="subtitle">نحن هنا لمساعدتك في أي وقت</p>
+
+        <div class="response-time">
+            <i class="fas fa-clock"></i>
+            <strong>وقت الاستجابة:</strong> نرد على جميع الاستفسارات خلال 24 ساعة كحد أقصى
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="contact-icon"><i class="fab fa-github"></i></div>
+                <div class="contact-title">GitHub</div>
+                <div class="contact-description">أفضل طريقة للإبلاغ عن المشاكل التقنية أو طلب ميزات جديدة</div>
+                <div class="contact-info">github.com/ayoub12-brw</div>
+                <a href="https://github.com/ayoub12-brw/rif-activator-tool/issues" class="contact-button">
+                    <i class="fas fa-bug"></i> إنشاء تذكرة
+                </a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                <div class="contact-title">البريد الإلكتروني</div>
+                <div class="contact-description">للاستفسارات العامة والدعم الفني وطلبات الشراكة</div>
+                <div class="contact-info">support@rifactivator.com</div>
+                <a href="mailto:support@rifactivator.com" class="contact-button">
+                    <i class="fas fa-paper-plane"></i> إرسال رسالة
+                </a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon"><i class="fab fa-telegram"></i></div>
+                <div class="contact-title">Telegram</div>
+                <div class="contact-description">دعم مباشر وسريع للمشاكل العاجلة والاستفسارات السريعة</div>
+                <div class="contact-info">@RiFActivatorSupport</div>
+                <a href="https://t.me/RiFActivatorSupport" class="contact-button">
+                    <i class="fas fa-comments"></i> محادثة مباشرة
+                </a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon"><i class="fab fa-discord"></i></div>
+                <div class="contact-title">Discord</div>
+                <div class="contact-description">انضم لمجتمع المطورين والمستخدمين لتبادل الخبرات</div>
+                <div class="contact-info">RiF Community</div>
+                <a href="#" class="contact-button">
+                    <i class="fas fa-users"></i> انضم للمجتمع
+                </a>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2 class="form-title">📝 نموذج التواصل السريع</h2>
+            
+            <form id="contactForm" onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label class="form-label" for="name">الاسم الكامل</label>
+                    <input type="text" id="name" class="form-input" placeholder="أدخل اسمك الكامل" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">البريد الإلكتروني</label>
+                    <input type="email" id="email" class="form-input" placeholder="example@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="subject">موضوع الرسالة</label>
+                    <select id="subject" class="form-input" required>
+                        <option value="">اختر نوع الاستفسار</option>
+                        <option value="technical">مشكلة تقنية</option>
+                        <option value="feature">طلب ميزة جديدة</option>
+                        <option value="billing">استفسار مالي</option>
+                        <option value="partnership">طلب شراكة</option>
+                        <option value="general">استفسار عام</option>
+                        <option value="other">أخرى</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="priority">أولوية الاستفسار</label>
+                    <select id="priority" class="form-input">
+                        <option value="low">منخفضة</option>
+                        <option value="medium" selected>متوسطة</option>
+                        <option value="high">عالية</option>
+                        <option value="urgent">عاجل</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="message">تفاصيل الرسالة</label>
+                    <textarea id="message" class="form-input form-textarea" placeholder="اكتب رسالتك هنا... كلما كانت التفاصيل أكثر، كان بإمكاننا مساعدتك بشكل أفضل" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-button">
+                    <i class="fas fa-paper-plane"></i> إرسال الرسالة
+                </button>
+            </form>
+        </div>
+
+        <div class="info-section">
+            <div class="info-title">💡 نصائح للحصول على أفضل دعم</div>
+            <div class="info-content">
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin: 10px 0;"><i class="fas fa-check" style="color: #4FC3F7; margin-left: 10px;"></i> اذكر نوع جهازك ورقم الطراز</li>
+                    <li style="margin: 10px 0;"><i class="fas fa-check" style="color: #4FC3F7; margin-left: 10px;"></i> ارفق لقطة شاشة للمشكلة إن أمكن</li>
+                    <li style="margin: 10px 0;"><i class="fas fa-check" style="color: #4FC3F7; margin-left: 10px;"></i> اشرح الخطوات التي قمت بها</li>
+                    <li style="margin: 10px 0;"><i class="fas fa-check" style="color: #4FC3F7; margin-left: 10px;"></i> حدد إصدار التطبيق الذي تستخدمه</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <div class="info-title">⏰ ساعات العمل</div>
+            <div class="info-content">
+                <p><strong>الاستجابة للرسائل:</strong> 24/7 (نرد خلال 24 ساعة)</p>
+                <p><strong>الدعم المباشر:</strong> السبت - الخميس (9:00 ص - 6:00 م GMT)</p>
+                <p><strong>حالات الطوارئ:</strong> متاح عبر Telegram في أي وقت</p>
+            </div>
+        </div>
+
+        <div class="social-links">
+            <a href="https://github.com/ayoub12-brw" class="social-link" title="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://t.me/RiFActivatorSupport" class="social-link" title="Telegram">
+                <i class="fab fa-telegram"></i>
+            </a>
+            <a href="#" class="social-link" title="Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-link" title="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.2);">
+            <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 15px;">
+                <i class="fas fa-heart" style="color: #e74c3c;"></i> 
+                شكراً لك على استخدام RiF Activator A12+
+            </p>
+            <div style="color: rgba(255, 255, 255, 0.6); font-size: 0.9rem;">
+                <p>فريق الدعم جاهز لمساعدتك في أي وقت</p>
+                <p>نقدر ثقتك بنا ونسعى لتقديم أفضل خدمة ممكنة</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                priority: document.getElementById('priority').value,
+                message: document.getElementById('message').value
+            };
+            
+            // Show loading state
+            const submitBtn = document.querySelector('.submit-button');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+            submitBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Show success message
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> تم الإرسال بنجاح!';
+                submitBtn.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
+                
+                // Reset form
+                document.getElementById('contactForm').reset();
+                
+                // Show thank you message
+                alert('شكراً لك! تم إرسال رسالتك بنجاح. سنتواصل معك قريباً.');
+                
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.style.background = 'linear-gradient(45deg, #4FC3F7, #29B6F6)';
+                    submitBtn.disabled = false;
+                }, 3000);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
