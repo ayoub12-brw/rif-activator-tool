@@ -332,12 +332,36 @@ def api_device_stats():
         ]
     })
 
+@app.route('/sitemap')
+def sitemap():
+    """خريطة الموقع - جميع الصفحات المتاحة"""
+    return jsonify({
+        'sitemap': 'RiF Activator A12+ - خريطة الموقع',
+        'main_pages': [
+            {'url': '/', 'title': 'الصفحة الرئيسية', 'description': 'واجهة التطبيق الرئيسية'},
+            {'url': '/check_device', 'title': 'فحص الجهاز', 'description': 'فحص وتفعيل الأجهزة'},
+            {'url': '/admin', 'title': 'لوحة الإدارة', 'description': 'إدارة النظام والإعدادات'},
+            {'url': '/reports', 'title': 'التقارير', 'description': 'تقارير وإحصائيات شاملة'},
+            {'url': '/sitemap', 'title': 'خريطة الموقع', 'description': 'جميع الصفحات المتاحة'}
+        ],
+        'api_endpoints': [
+            {'url': '/api/status', 'method': 'GET', 'description': 'حالة النظام'},
+            {'url': '/api/live_stats', 'method': 'GET', 'description': 'إحصائيات مباشرة'},
+            {'url': '/api/supported_devices', 'method': 'GET', 'description': 'الأجهزة المدعومة'},
+            {'url': '/api/check_device', 'method': 'POST', 'description': 'فحص وتفعيل الجهاز'},
+            {'url': '/api/daily_report', 'method': 'GET', 'description': 'التقرير اليومي'},
+            {'url': '/api/weekly_report', 'method': 'GET', 'description': 'التقرير الأسبوعي'}, 
+            {'url': '/api/device_stats', 'method': 'GET', 'description': 'إحصائيات الأجهزة'},
+            {'url': '/api/docs', 'method': 'GET', 'description': 'توثيق API'}
+        ]
+    })
+
 @app.route('/api/docs')
 def api_docs():
     """وثائق API"""
     docs = {
         'title': 'RiF Activator A12+ API',
-        'version': '2.0.0',
+        'version': '2.6.0',
         'endpoints': {
             'GET /api/status': 'حالة الخادم',
             'GET /api/live_stats': 'إحصائيات مباشرة', 
@@ -360,10 +384,25 @@ def not_found(error):
     return jsonify({
         'error': 'غير موجود',
         'message': 'الصفحة المطلوبة غير موجودة',
-        'available_endpoints': [
-            '/', '/check_device', '/admin', '/reports',
-            '/api/status', '/api/live_stats', '/api/supported_devices'
-        ]
+        'available_pages': {
+            'main_pages': {
+                '/': 'الصفحة الرئيسية',
+                '/check_device': 'فحص الجهاز',
+                '/admin': 'لوحة الإدارة', 
+                '/reports': 'التقارير'
+            },
+            'api_endpoints': {
+                '/api/status': 'حالة النظام',
+                '/api/live_stats': 'إحصائيات مباشرة',
+                '/api/supported_devices': 'الأجهزة المدعومة',
+                '/api/daily_report': 'تقرير يومي',
+                '/api/weekly_report': 'تقرير أسبوعي',
+                '/api/device_stats': 'إحصائيات الأجهزة',
+                '/api/docs': 'توثيق API',
+                '/api/check_device': 'فحص جهاز (POST)'
+            }
+        },
+        'suggested_action': 'تحقق من الرابط أو استخدم الصفحة الرئيسية: /'
     }), 404
 
 @app.errorhandler(500)
