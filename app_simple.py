@@ -335,6 +335,11 @@ def api_device_stats():
 @app.route('/sitemap')
 def sitemap():
     """خريطة الموقع - جميع الصفحات المتاحة"""
+    return render_template('sitemap.html')
+
+@app.route('/api/sitemap')
+def api_sitemap():
+    """خريطة الموقع JSON للـ API"""
     return jsonify({
         'sitemap': 'RiF Activator A12+ - خريطة الموقع',
         'main_pages': [
