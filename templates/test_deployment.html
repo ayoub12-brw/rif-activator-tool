@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 اختبار النشر | RiF Activator A12+</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .test-title {
+            color: #4FC3F7;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .test-result {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        .status-good {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .status-info {
+            color: #4FC3F7;
+            font-weight: bold;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .test-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .test-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .test-link {
+            color: #4FC3F7;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: rgba(79, 195, 247, 0.2);
+            display: inline-block;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .test-link:hover {
+            background: rgba(79, 195, 247, 0.4);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .url-display {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            color: #4FC3F7;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            word-break: break-all;
+            margin: 15px 0;
+        }
+
+        .back-home {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin: 20px auto;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .back-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            color: white;
+        }
+
+        .loading {
+            color: #FFC107;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 اختبار النشر</h1>
+
+        <div class="test-section">
+            <div class="test-title">
+                🌐 معلومات البيئة
+            </div>
+            <div class="test-result">
+                <strong>URL الحالي:</strong>
+                <div class="url-display" id="currentUrl">جارِ التحميل...</div>
+            </div>
+            <div class="test-result">
+                <strong>حالة الاتصال:</strong> 
+                <span class="status-good" id="connectionStatus">متصل ✓</span>
+            </div>
+            <div class="test-result">
+                <strong>نوع المتصفح:</strong> 
+                <span class="status-info" id="browserInfo">جارِ التحقق...</span>
+            </div>
+            <div class="test-result">
+                <strong>وقت التحميل:</strong> 
+                <span class="status-info" id="loadTime">جارِ الحساب...</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">
+                🔗 اختبار الروابط
+            </div>
+            <div class="test-grid">
+                <div class="test-item">
+                    <div class="test-icon">🏠</div>
+                    <div>الصفحة الرئيسية</div>
+                    <a href="/" class="test-link">اختبار</a>
+                </div>
+                <div class="test-item">
+                    <div class="test-icon">📱</div>
+                    <div>فحص الجهاز</div>
+                    <a href="/check_device" class="test-link">اختبار</a>
+                </div>
+                <div class="test-item">
+                    <div class="test-icon">⚙️</div>
+                    <div>لوحة الإدارة</div>
+                    <a href="/admin" class="test-link">اختبار</a>
+                </div>
+                <div class="test-item">
+                    <div class="test-icon">📊</div>
+                    <div>التقارير</div>
+                    <a href="/reports" class="test-link">اختبار</a>
+                </div>
+                <div class="test-item">
+                    <div class="test-icon">ℹ️</div>
+                    <div>حول التطبيق</div>
+                    <a href="/about" class="test-link">اختبار</a>
+                </div>
+                <div class="test-item">
+                    <div class="test-icon">❓</div>
+                    <div>المساعدة</div>
+                    <a href="/help" class="test-link">اختبار</a>
+                </div>
+                <div class="test-item">
+                    <div class="test-icon">📞</div>
+                    <div>التواصل</div>
+                    <a href="/contact" class="test-link">اختبار</a>
+                </div>
+                <div class="test-item">
+                    <div class="test-icon">🗺️</div>
+                    <div>خريطة الموقع</div>
+                    <a href="/sitemap" class="test-link">اختبار</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">
+                🔌 اختبار API
+            </div>
+            <div class="test-grid">
+                <div class="test-item">
+                    <div class="test-icon">📊</div>
+                    <div>حالة النظام</div>
+                    <a href="/api/status" class="test-link">اختبار</a>
+                </div>
+                <div class="test-item">
+                    <div class="test-icon">📈</div>
+                    <div>إحصائيات مباشرة</div>
+                    <a href="/api/live_stats" class="test-link">اختبار</a>
+                </div>
+                <div class="test-item">
+                    <div class="test-icon">📱</div>
+                    <div>الأجهزة المدعومة</div>
+                    <a href="/api/supported_devices" class="test-link">اختبار</a>
+                </div>
+                <div class="test-item">
+                    <div class="test-icon">📚</div>
+                    <div>توثيق API</div>
+                    <a href="/api/docs" class="test-link">اختبار</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">
+                🎯 اختبار المسارات المُحَوَّلة
+            </div>
+            <div class="test-result">
+                <div class="test-link" onclick="testRedirect('/home')">اختبار /home</div>
+                <div class="test-link" onclick="testRedirect('/dashboard')">اختبار /dashboard</div>
+                <div class="test-link" onclick="testRedirect('/activate')">اختبار /activate</div>
+                <div class="test-link" onclick="testRedirect('/docs')">اختبار /docs</div>
+                <div class="test-link" onclick="testRedirect('/support')">اختبار /support</div>
+            </div>
+            <div id="redirectResults"></div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="/" class="back-home">🏠 العودة للصفحة الرئيسية</a>
+        </div>
+    </div>
+
+    <script>
+        const startTime = performance.now();
+        
+        // Update current URL
+        document.getElementById('currentUrl').textContent = window.location.href;
+        
+        // Browser info
+        const browserInfo = navigator.userAgent.split(' ').slice(-2).join(' ');
+        document.getElementById('browserInfo').textContent = browserInfo;
+        
+        // Load time
+        window.addEventListener('load', () => {
+            const loadTime = ((performance.now() - startTime) / 1000).toFixed(2);
+            document.getElementById('loadTime').textContent = loadTime + ' ثانية';
+        });
+
+        // Test redirect function
+        function testRedirect(path) {
+            const resultsDiv = document.getElementById('redirectResults');
+            const testResult = document.createElement('div');
+            testResult.className = 'test-result';
+            testResult.innerHTML = `<span class="loading">🔄 اختبار ${path}...</span>`;
+            resultsDiv.appendChild(testResult);
+            
+            fetch(path)
+                .then(response => {
+                    if (response.redirected) {
+                        testResult.innerHTML = `<span class="status-good">✓ ${path} → ${response.url}</span>`;
+                    } else {
+                        testResult.innerHTML = `<span class="status-info">↗ ${path} يعمل مباشرة</span>`;
+                    }
+                })
+                .catch(error => {
+                    testResult.innerHTML = `<span style="color: #f44336;">✗ خطأ في ${path}: ${error.message}</span>`;
+                });
+        }
+
+        // Auto test all endpoints on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                // Test API endpoints
+                const apiTests = ['/api/status', '/api/live_stats', '/api/supported_devices'];
+                apiTests.forEach(endpoint => {
+                    fetch(endpoint)
+                        .then(response => response.ok ? 
+                            console.log(`✓ ${endpoint} يعمل`) : 
+                            console.log(`⚠ ${endpoint} مشكلة`)
+                        )
+                        .catch(err => console.log(`✗ ${endpoint} خطأ:`, err));
+                });
+            }, 1000);
+        });
+
+        // Add some visual effects
+        document.querySelectorAll('.test-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (!this.href) {
+                    e.preventDefault();
+                }
+                this.style.background = 'rgba(76, 175, 80, 0.4)';
+                setTimeout(() => {
+                    this.style.background = '';
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>

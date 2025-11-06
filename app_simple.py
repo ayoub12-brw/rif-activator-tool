@@ -356,6 +356,41 @@ def contact_page():
     """صفحة التواصل"""
     return render_template('contact.html')
 
+@app.route('/home')
+def home_redirect():
+    """إعادة توجيه /home إلى الصفحة الرئيسية"""
+    return redirect(url_for('index'))
+
+@app.route('/dashboard')
+def dashboard_redirect():
+    """إعادة توجيه /dashboard إلى لوحة الإدارة"""
+    return redirect(url_for('admin_page'))
+
+@app.route('/activate')
+def activate_redirect():
+    """إعادة توجيه /activate إلى فحص الجهاز"""
+    return redirect(url_for('check_device_page'))
+
+@app.route('/docs')
+def docs_redirect():
+    """إعادة توجيه /docs إلى توثيق API"""
+    return redirect('/api/docs')
+
+@app.route('/support')
+def support_redirect():
+    """إعادة توجيه /support إلى المساعدة"""
+    return redirect(url_for('help_page'))
+
+@app.route('/deployment-success')
+def deployment_success():
+    """صفحة نجح النشر"""
+    return render_template('deployment_success.html')
+
+@app.route('/test-deployment')
+def test_deployment():
+    """صفحة اختبار النشر"""
+    return render_template('test_deployment.html')
+
 @app.route('/api/sitemap')
 def api_sitemap():
     """خريطة الموقع JSON للـ API"""
@@ -366,6 +401,10 @@ def api_sitemap():
             {'url': '/check_device', 'title': 'فحص الجهاز', 'description': 'فحص وتفعيل الأجهزة'},
             {'url': '/admin', 'title': 'لوحة الإدارة', 'description': 'إدارة النظام والإعدادات'},
             {'url': '/reports', 'title': 'التقارير', 'description': 'تقارير وإحصائيات شاملة'},
+            {'url': '/about', 'title': 'حول التطبيق', 'description': 'معلومات التطبيق والفريق'},
+            {'url': '/help', 'title': 'المساعدة', 'description': 'الأسئلة الشائعة والدعم'},
+            {'url': '/contact', 'title': 'التواصل', 'description': 'قنوات التواصل والدعم'},
+            {'url': '/deployment-success', 'title': 'نجح النشر', 'description': 'صفحة تأكيد نجح النشر'},
             {'url': '/sitemap', 'title': 'خريطة الموقع', 'description': 'جميع الصفحات المتاحة'}
         ],
         'api_endpoints': [
@@ -403,31 +442,46 @@ def api_docs():
     return jsonify(docs)
 
 # التعامل مع الأخطاء
+@app.route('/favicon.ico')
+def favicon():
+    """أيقونة الموقع"""
+    return '', 204
+
 @app.errorhandler(404)
 def not_found(error):
-    return jsonify({
-        'error': 'غير موجود',
-        'message': 'الصفحة المطلوبة غير موجودة',
-        'available_pages': {
-            'main_pages': {
-                '/': 'الصفحة الرئيسية',
-                '/check_device': 'فحص الجهاز',
-                '/admin': 'لوحة الإدارة', 
-                '/reports': 'التقارير'
+    """معالج الصفحات غير الموجودة"""
+    # إذا كان الطلب JSON API
+    if request.path.startswith('/api/') or 'application/json' in request.headers.get('Accept', ''):
+        return jsonify({
+            'error': 'غير موجود',
+            'message': 'الصفحة المطلوبة غير موجودة',
+            'available_pages': {
+                'main_pages': {
+                    '/': 'الصفحة الرئيسية',
+                    '/check_device': 'فحص الجهاز',
+                    '/admin': 'لوحة الإدارة', 
+                    '/reports': 'التقارير',
+                    '/sitemap': 'خريطة الموقع',
+                    '/about': 'حول التطبيق',
+                    '/help': 'المساعدة',
+                    '/contact': 'التواصل'
+                },
+                'api_endpoints': {
+                    '/api/status': 'حالة النظام',
+                    '/api/live_stats': 'إحصائيات مباشرة',
+                    '/api/supported_devices': 'الأجهزة المدعومة',
+                    '/api/daily_report': 'تقرير يومي',
+                    '/api/weekly_report': 'تقرير أسبوعي',
+                    '/api/device_stats': 'إحصائيات الأجهزة',
+                    '/api/docs': 'توثيق API',
+                    '/api/check_device': 'فحص جهاز (POST)'
+                }
             },
-            'api_endpoints': {
-                '/api/status': 'حالة النظام',
-                '/api/live_stats': 'إحصائيات مباشرة',
-                '/api/supported_devices': 'الأجهزة المدعومة',
-                '/api/daily_report': 'تقرير يومي',
-                '/api/weekly_report': 'تقرير أسبوعي',
-                '/api/device_stats': 'إحصائيات الأجهزة',
-                '/api/docs': 'توثيق API',
-                '/api/check_device': 'فحص جهاز (POST)'
-            }
-        },
-        'suggested_action': 'تحقق من الرابط أو استخدم الصفحة الرئيسية: /'
-    }), 404
+            'suggested_action': 'تحقق من الرابط أو استخدم خريطة الموقع: /sitemap'
+        }), 404
+    
+    # للطلبات العادية، إعادة توجيه لخريطة الموقع
+    return redirect(url_for('sitemap'))
 
 @app.errorhandler(500)
 def internal_error(error):
