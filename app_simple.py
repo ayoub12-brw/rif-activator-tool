@@ -57,37 +57,37 @@ def init_database():
         count = c.fetchone()[0]
         
         if count == 0:
-            # إضافة الموديلات المدعومة
+            # إضافة الموديلات المدعومة - محدث لدعم iOS حتى 26.x
             models = [
-                ('iPhone11,2', 'iPhone XS', '12.0-18.x', 1),
-                ('iPhone11,4', 'iPhone XS Max', '12.0-18.x', 1),
-                ('iPhone11,6', 'iPhone XS Max', '12.0-18.x', 1),
-                ('iPhone11,8', 'iPhone XR', '12.0-18.x', 1),
-                ('iPhone12,1', 'iPhone 11', '13.0-18.x', 1),
-                ('iPhone12,3', 'iPhone 11 Pro', '13.0-18.x', 1),
-                ('iPhone12,5', 'iPhone 11 Pro Max', '13.0-18.x', 1),
-                ('iPhone12,8', 'iPhone SE (2nd)', '13.0-18.x', 1),
-                ('iPhone13,1', 'iPhone 12 mini', '14.0-18.x', 1),
-                ('iPhone13,2', 'iPhone 12', '14.0-18.x', 1),
-                ('iPhone13,3', 'iPhone 12 Pro', '14.0-18.x', 1),
-                ('iPhone13,4', 'iPhone 12 Pro Max', '14.0-18.x', 1),
-                ('iPhone14,2', 'iPhone 13 Pro', '15.0-18.x', 1),
-                ('iPhone14,3', 'iPhone 13 Pro Max', '15.0-18.x', 1),
-                ('iPhone14,4', 'iPhone 13 mini', '15.0-18.x', 1),
-                ('iPhone14,5', 'iPhone 13', '15.0-18.x', 1),
-                ('iPhone14,6', 'iPhone SE (3rd)', '15.0-18.x', 1),
-                ('iPhone14,7', 'iPhone 14', '16.0-18.x', 1),
-                ('iPhone14,8', 'iPhone 14 Plus', '16.0-18.x', 1),
-                ('iPhone15,2', 'iPhone 14 Pro', '16.0-18.x', 1),
-                ('iPhone15,3', 'iPhone 14 Pro Max', '16.0-18.x', 1),
-                ('iPhone15,4', 'iPhone 15', '17.0-18.x', 1),
-                ('iPhone15,5', 'iPhone 15 Plus', '17.0-18.x', 1),
-                ('iPhone16,1', 'iPhone 15 Pro', '17.0-18.x', 1),
-                ('iPhone16,2', 'iPhone 15 Pro Max', '17.0-18.x', 1),
-                ('iPhone17,1', 'iPhone 16 Pro', '18.0-18.x', 1),
-                ('iPhone17,2', 'iPhone 16 Pro Max', '18.0-18.x', 1),
-                ('iPhone17,3', 'iPhone 16', '18.0-18.x', 1),
-                ('iPhone17,4', 'iPhone 16 Plus', '18.0-18.x', 1)
+                ('iPhone11,2', 'iPhone XS', '12.0-26.x', 1),
+                ('iPhone11,4', 'iPhone XS Max', '12.0-26.x', 1),
+                ('iPhone11,6', 'iPhone XS Max', '12.0-26.x', 1),
+                ('iPhone11,8', 'iPhone XR', '12.0-26.x', 1),
+                ('iPhone12,1', 'iPhone 11', '13.0-26.x', 1),
+                ('iPhone12,3', 'iPhone 11 Pro', '13.0-26.x', 1),
+                ('iPhone12,5', 'iPhone 11 Pro Max', '13.0-26.x', 1),
+                ('iPhone12,8', 'iPhone SE (2nd)', '13.0-26.x', 1),
+                ('iPhone13,1', 'iPhone 12 mini', '14.0-26.x', 1),
+                ('iPhone13,2', 'iPhone 12', '14.0-26.x', 1),
+                ('iPhone13,3', 'iPhone 12 Pro', '14.0-26.x', 1),
+                ('iPhone13,4', 'iPhone 12 Pro Max', '14.0-26.x', 1),
+                ('iPhone14,2', 'iPhone 13 Pro', '15.0-26.x', 1),
+                ('iPhone14,3', 'iPhone 13 Pro Max', '15.0-26.x', 1),
+                ('iPhone14,4', 'iPhone 13 mini', '15.0-26.x', 1),
+                ('iPhone14,5', 'iPhone 13', '15.0-26.x', 1),
+                ('iPhone14,6', 'iPhone SE (3rd)', '15.0-26.x', 1),
+                ('iPhone14,7', 'iPhone 14', '16.0-26.x', 1),
+                ('iPhone14,8', 'iPhone 14 Plus', '16.0-26.x', 1),
+                ('iPhone15,2', 'iPhone 14 Pro', '16.0-26.x', 1),
+                ('iPhone15,3', 'iPhone 14 Pro Max', '16.0-26.x', 1),
+                ('iPhone15,4', 'iPhone 15', '17.0-26.x', 1),
+                ('iPhone15,5', 'iPhone 15 Plus', '17.0-26.x', 1),
+                ('iPhone16,1', 'iPhone 15 Pro', '17.0-26.x', 1),
+                ('iPhone16,2', 'iPhone 15 Pro Max', '17.0-26.x', 1),
+                ('iPhone17,1', 'iPhone 16 Pro', '18.0-26.x', 1),
+                ('iPhone17,2', 'iPhone 16 Pro Max', '18.0-26.x', 1),
+                ('iPhone17,3', 'iPhone 16', '18.0-26.x', 1),
+                ('iPhone17,4', 'iPhone 16 Plus', '18.0-26.x', 1)
             ]
             
             c.executemany('''INSERT INTO supported_models 
@@ -185,15 +185,50 @@ def api_check_device():
             display_name, supported_ios, is_supported = result
             
             if is_supported:
+                # فحص إضافي لنطاق iOS إذا تم توفير الإصدار
+                ios_compatible = True
+                ios_message = ""
+                
+                if ios_version:
+                    # تحليل نطاق iOS المدعوم من قاعدة البيانات
+                    if '-' in supported_ios:
+                        min_ios, max_ios = supported_ios.split('-')
+                        min_ios = min_ios.strip()
+                        max_ios = max_ios.strip()
+                        
+                        # تحويل iOS version إلى أرقام للمقارنة
+                        try:
+                            current_ios_parts = [int(x) for x in ios_version.split('.')]
+                            min_ios_parts = [int(x) for x in min_ios.split('.')]
+                            
+                            # فحص الحد الأدنى
+                            current_ios_tuple = tuple(current_ios_parts + [0] * (3 - len(current_ios_parts)))
+                            min_ios_tuple = tuple(min_ios_parts + [0] * (3 - len(min_ios_parts)))
+                            
+                            if current_ios_tuple < min_ios_tuple:
+                                ios_compatible = False
+                                ios_message = f" (iOS {ios_version} أقل من المطلوب {min_ios})"
+                            elif max_ios.endswith('.x'):
+                                # نطاق مفتوح مثل 18.x أو 26.x
+                                max_major = int(max_ios.split('.')[0])
+                                current_major = current_ios_parts[0]
+                                if current_major > max_major:
+                                    ios_compatible = False  
+                                    ios_message = f" (iOS {ios_version} أعلى من المدعوم {max_ios})"
+                        except (ValueError, IndexError):
+                            # إذا فشل التحليل، نعتبر الإصدار مدعوم
+                            pass
+                
                 return jsonify({
-                    'supported': True,
-                    'message': f'الجهاز مدعوم: {display_name}',
+                    'supported': ios_compatible,
+                    'message': f'الجهاز {"مدعوم" if ios_compatible else "غير مدعوم"}: {display_name}{ios_message}',
                     'device_info': {
                         'model': device_model,
                         'display_name': display_name,
+                        'ios_version': ios_version if ios_version else 'غير محدد',
                         'ios_versions': supported_ios,
                         'serial': serial if serial else 'غير محدد',
-                        'status': 'مدعوم ✅'
+                        'status': f'{"مدعوم ✅" if ios_compatible else "غير مدعوم ❌"}'
                     }
                 })
             else:

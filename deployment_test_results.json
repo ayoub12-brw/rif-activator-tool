@@ -1,0 +1,267 @@
+{
+  "main_routes": [
+    {
+      "route": "/",
+      "url": "https://rif-activator-tool.onrender.com/",
+      "status_code": 200,
+      "response_time": 566.14,
+      "success": true,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/",
+      "content_type": "text/html; charset=utf-8",
+      "size": 37497
+    },
+    {
+      "route": "/check_device",
+      "url": "https://rif-activator-tool.onrender.com/check_device",
+      "status_code": 200,
+      "response_time": 241.46,
+      "success": true,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/check_device",
+      "content_type": "text/html; charset=utf-8",
+      "size": 17552
+    },
+    {
+      "route": "/admin",
+      "url": "https://rif-activator-tool.onrender.com/admin",
+      "status_code": 200,
+      "response_time": 230.1,
+      "success": true,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/admin",
+      "content_type": "text/html; charset=utf-8",
+      "size": 53320
+    },
+    {
+      "route": "/reports",
+      "url": "https://rif-activator-tool.onrender.com/reports",
+      "status_code": 200,
+      "response_time": 221.47,
+      "success": true,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/reports",
+      "content_type": "text/html; charset=utf-8",
+      "size": 31121
+    },
+    {
+      "route": "/about",
+      "url": "https://rif-activator-tool.onrender.com/about",
+      "status_code": 200,
+      "response_time": 272.41,
+      "success": true,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/about",
+      "content_type": "text/html; charset=utf-8",
+      "size": 12716
+    },
+    {
+      "route": "/help",
+      "url": "https://rif-activator-tool.onrender.com/help",
+      "status_code": 200,
+      "response_time": 225.52,
+      "success": true,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/help",
+      "content_type": "text/html; charset=utf-8",
+      "size": 16213
+    },
+    {
+      "route": "/contact",
+      "url": "https://rif-activator-tool.onrender.com/contact",
+      "status_code": 200,
+      "response_time": 249.17,
+      "success": true,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/contact",
+      "content_type": "text/html; charset=utf-8",
+      "size": 17405
+    },
+    {
+      "route": "/sitemap",
+      "url": "https://rif-activator-tool.onrender.com/sitemap",
+      "status_code": 200,
+      "response_time": 239.45,
+      "success": true,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/sitemap",
+      "content_type": "text/html; charset=utf-8",
+      "size": 12880
+    },
+    {
+      "route": "/deployment-success",
+      "url": "https://rif-activator-tool.onrender.com/deployment-success",
+      "status_code": 404,
+      "response_time": 227.86,
+      "success": false,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/deployment-success",
+      "content_type": "application/json",
+      "size": 1519
+    },
+    {
+      "route": "/test-deployment",
+      "url": "https://rif-activator-tool.onrender.com/test-deployment",
+      "status_code": 404,
+      "response_time": 258.81,
+      "success": false,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/test-deployment",
+      "content_type": "application/json",
+      "size": 1519
+    }
+  ],
+  "api_routes": [
+    {
+      "route": "/api/status",
+      "url": "https://rif-activator-tool.onrender.com/api/status",
+      "status_code": 200,
+      "response_time": 265.61,
+      "success": true,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/api/status",
+      "content_type": "application/json",
+      "size": 122
+    },
+    {
+      "route": "/api/live_stats",
+      "url": "https://rif-activator-tool.onrender.com/api/live_stats",
+      "status_code": 200,
+      "response_time": 231.4,
+      "success": true,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/api/live_stats",
+      "content_type": "application/json",
+      "size": 143
+    },
+    {
+      "route": "/api/supported_devices",
+      "url": "https://rif-activator-tool.onrender.com/api/supported_devices",
+      "status_code": 500,
+      "response_time": 227.13,
+      "success": false,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/api/supported_devices",
+      "content_type": "application/json",
+      "size": 152
+    },
+    {
+      "route": "/api/device_stats",
+      "url": "https://rif-activator-tool.onrender.com/api/device_stats",
+      "status_code": 200,
+      "response_time": 224.11,
+      "success": true,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/api/device_stats",
+      "content_type": "application/json",
+      "size": 331
+    },
+    {
+      "route": "/api/daily_report",
+      "url": "https://rif-activator-tool.onrender.com/api/daily_report",
+      "status_code": 200,
+      "response_time": 228.72,
+      "success": true,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/api/daily_report",
+      "content_type": "application/json",
+      "size": 263
+    },
+    {
+      "route": "/api/weekly_report",
+      "url": "https://rif-activator-tool.onrender.com/api/weekly_report",
+      "status_code": 200,
+      "response_time": 221.58,
+      "success": true,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/api/weekly_report",
+      "content_type": "application/json",
+      "size": 195
+    },
+    {
+      "route": "/api/sitemap",
+      "url": "https://rif-activator-tool.onrender.com/api/sitemap",
+      "status_code": 200,
+      "response_time": 222.95,
+      "success": true,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/api/sitemap",
+      "content_type": "application/json",
+      "size": 2364
+    },
+    {
+      "route": "/api/docs",
+      "url": "https://rif-activator-tool.onrender.com/api/docs",
+      "status_code": 200,
+      "response_time": 255.68,
+      "success": true,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/api/docs",
+      "content_type": "application/json",
+      "size": 1156
+    }
+  ],
+  "redirect_routes": [
+    {
+      "route": "/home",
+      "url": "https://rif-activator-tool.onrender.com/home",
+      "status_code": 404,
+      "response_time": 258.8,
+      "success": false,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/home",
+      "content_type": "application/json",
+      "size": 1519
+    },
+    {
+      "route": "/dashboard",
+      "url": "https://rif-activator-tool.onrender.com/dashboard",
+      "status_code": 404,
+      "response_time": 217.73,
+      "success": false,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/dashboard",
+      "content_type": "application/json",
+      "size": 1519
+    },
+    {
+      "route": "/activate",
+      "url": "https://rif-activator-tool.onrender.com/activate",
+      "status_code": 404,
+      "response_time": 255.82,
+      "success": false,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/activate",
+      "content_type": "application/json",
+      "size": 1519
+    },
+    {
+      "route": "/docs",
+      "url": "https://rif-activator-tool.onrender.com/docs",
+      "status_code": 404,
+      "response_time": 208.9,
+      "success": false,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/docs",
+      "content_type": "application/json",
+      "size": 1519
+    },
+    {
+      "route": "/support",
+      "url": "https://rif-activator-tool.onrender.com/support",
+      "status_code": 404,
+      "response_time": 218.45,
+      "success": false,
+      "redirected": false,
+      "final_url": "https://rif-activator-tool.onrender.com/support",
+      "content_type": "application/json",
+      "size": 1519
+    }
+  ],
+  "summary": {
+    "total": 23,
+    "success": 15,
+    "failed": 8,
+    "avg_response_time": 250.84
+  }
+}
