@@ -323,6 +323,49 @@ class DeviceWindow(QWidget):
         product_type = info.get("ProductType", "")
         ios_version = info.get("ProductVersion", "")
         udid = info.get("UniqueDeviceID", "")
+        
+        # Check if this is a new device detection (first time connecting)
+        if not hasattr(self, '_last_detected_serial') or self._last_detected_serial != serial:
+            self._last_detected_serial = serial
+            device_name = self.MODEL_MAP.get(product_type, product_type)
+            
+            # Show initial device detection message
+            detection_message = f"📱 Device Connected!\n\nDetected: {device_name}\niOS: {ios_version}\nSerial: {serial}\n\nChecking compatibility..."
+            
+            try:
+                # Quick notification popup
+                msg_box = QMessageBox()
+                msg_box.setWindowTitle("📱 Device Connected")
+                msg_box.setText(detection_message)
+                msg_box.setIcon(QMessageBox.Information)
+                msg_box.setStandardButtons(QMessageBox.Ok)
+                msg_box.setDefaultButton(QMessageBox.Ok)
+                
+                # Auto-close after 3 seconds
+                QTimer.singleShot(3000, msg_box.accept)
+                
+                msg_box.setStyleSheet("""
+                    QMessageBox {
+                        background-color: #2b2b2b;
+                        color: white;
+                        font-family: 'Segoe UI', Arial;
+                        font-size: 11px;
+                    }
+                    QMessageBox QPushButton {
+                        background-color: #2196F3;
+                        color: white;
+                        border: none;
+                        padding: 6px 12px;
+                        border-radius: 3px;
+                        min-width: 60px;
+                    }
+                """)
+                
+                msg_box.show()  # Non-blocking show
+                
+            except Exception as e:
+                print(f"[ERROR] Failed to show detection popup: {e}")
+        
         print(f"[DEBUG] Device detected: {product_type}, iOS {ios_version}, Serial {serial}")
 
         # If auto reboot is enabled, reboot once per detected device then continue checks after it reconnects
@@ -391,6 +434,57 @@ class DeviceWindow(QWidget):
         if (supported or allowed_local) and not in_range:
             print(f"[INFO] iOS version out of supported range (server said supported): {ios_version}")
         supported = final_supported
+        
+        # Show congratulations message when device is supported
+        if supported:
+            device_name = self.MODEL_MAP.get(product_type, product_type)
+            congrats_message = f"🎉 Congratulations! Your device is supported!\n\n📱 Device: {device_name}\n🔢 iOS: {ios_version}\n📟 Serial: {serial}\n\n✅ Your device is ready for activation!"
+            
+            # Show popup message
+            try:
+                msg_box = QMessageBox()
+                msg_box.setWindowTitle("🎉 Device Supported!")
+                msg_box.setText(congrats_message)
+                msg_box.setIcon(QMessageBox.Information)
+                msg_box.setStandardButtons(QMessageBox.Ok)
+                msg_box.setDefaultButton(QMessageBox.Ok)
+                
+                # Add custom styling
+                msg_box.setStyleSheet("""
+                    QMessageBox {
+                        background-color: #2b2b2b;
+                        color: white;
+                        font-family: 'Segoe UI', Arial;
+                        font-size: 12px;
+                    }
+                    QMessageBox QPushButton {
+                        background-color: #4CAF50;
+                        color: white;
+                        border: none;
+                        padding: 8px 16px;
+                        border-radius: 4px;
+                        font-weight: bold;
+                        min-width: 80px;
+                    }
+                    QMessageBox QPushButton:hover {
+                        background-color: #45a049;
+                    }
+                """)
+                
+                # Show the message box
+                msg_box.exec_()
+                
+                # Play system sound (if available)
+                try:
+                    import winsound
+                    winsound.MessageBeep(winsound.MB_OK)
+                except:
+                    pass
+                    
+                print(f"[INFO] ✅ Device supported: {device_name} - iOS {ios_version}")
+            except Exception as e:
+                print(f"[ERROR] Failed to show congratulations popup: {e}")
+        
         # Emit result and if supported, check registration status
         self.support_signal.emit(info, supported, message)
         if supported:
