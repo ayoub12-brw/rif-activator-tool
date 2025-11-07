@@ -110,10 +110,10 @@ class DeviceWindow(QWidget):
         self._server_error_next_log = 0.0
         # Throttle device detection error logs
         self._device_error_next_log = 0.0
-        # iOS support range (inclusive) - Support from iOS 18.7.1 to iOS 26.1
-        self._min_ios = (18, 7, 1)
-        # Allow any patch for 26.1 by setting a high patch ceiling
-        self._max_ios = (26, 1, 999)
+        # iOS support range (inclusive) - Support from iOS 12.0 to iOS 26.x
+        self._min_ios = (12, 0, 0)
+        # Allow any iOS version up to 26.x
+        self._max_ios = (26, 999, 999)
         # API key for backend auth (server expects X-API-Key header)
         self.api_key = os.environ.get("API_KEY", "dev-api-key")
         # Optional local whitelist for development (comma-separated ProductType codes)
@@ -368,13 +368,25 @@ class DeviceWindow(QWidget):
                 self._server_error_next_log = now + 15
             supported = False
             message = ""
+        
         # Apply optional local whitelist override for development
         allowed_local = product_type in self.local_allowed_models if self.local_allowed_models else False
         if allowed_local and not supported:
             print(f"[DEBUG] Local model override applied for {product_type}")
+        
+        # If server failed and no local whitelist, try local MODEL_MAP as fallback
+        local_fallback = False
+        if not supported and not allowed_local:
+            # Use MODEL_MAP for local fallback when server is unavailable
+            if product_type in self.MODEL_MAP:
+                local_fallback = True
+                device_name = self.MODEL_MAP.get(product_type, product_type)
+                print(f"[DEBUG] Server unavailable, using local MODEL_MAP fallback for {device_name}")
+                message = f"Local support: {device_name}"
+            
         # Enforce iOS version range and combine with server/local decision
         in_range = self._is_ios_in_supported_range(ios_version)
-        final_supported = (bool(supported) or allowed_local) and in_range
+        final_supported = (bool(supported) or allowed_local or local_fallback) and in_range
         print(f"[DEBUG] iOS in range? {in_range}, Final supported: {final_supported}")
         if (supported or allowed_local) and not in_range:
             print(f"[INFO] iOS version out of supported range (server said supported): {ios_version}")
