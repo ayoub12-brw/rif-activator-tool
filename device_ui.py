@@ -116,11 +116,29 @@ class DeviceWindow(QWidget):
         self._max_ios = (26, 999, 999)
         # API key for backend auth (server expects X-API-Key header)
         self.api_key = os.environ.get("API_KEY", "dev-api-key")
-        # Optional local whitelist for development (comma-separated ProductType codes)
+        # Optional local whitelist for development (| separated ProductType codes)
         local_allowed = os.environ.get("LOCAL_ALLOWED_MODELS", "").strip()
-        self.local_allowed_models = set(
-            x.strip() for x in local_allowed.split(",") if x.strip()
-        )
+        # Handle smart parsing for models containing commas
+        if local_allowed:
+            if "|" in local_allowed:
+                # Use | separator for multiple models
+                models_list = [x.strip() for x in local_allowed.split("|") if x.strip()]
+            elif ";" in local_allowed:
+                # Use ; separator for multiple models  
+                models_list = [x.strip() for x in local_allowed.split(";") if x.strip()]
+            else:
+                # For single model that may contain commas (like iPhone14,2)
+                # Only split on spaces, not commas
+                if " " in local_allowed:
+                    # Multiple models separated by spaces
+                    models_list = [x.strip() for x in local_allowed.split() if x.strip()]
+                else:
+                    # Single model (may contain commas)
+                    models_list = [local_allowed]
+            
+            self.local_allowed_models = set(models_list)
+        else:
+            self.local_allowed_models = set()
         # Enable free activation mode in development/admin
         self.free_activation = (
             os.environ.get("FREE_ACTIVATION", "0").lower() in ("1", "true")
@@ -311,11 +329,19 @@ class DeviceWindow(QWidget):
         self._check_timer.start(2000)
 
     def check_device(self):
-        threading.Thread(target=self._check_device_support_background, daemon=True).start()
+        try:
+            threading.Thread(target=self._check_device_support_background, daemon=True).start()
+        except Exception as e:
+            print(f"[DEBUG] Error starting device check thread: {e}")
 
     def _check_device_support_background(self):
-        info = self._get_device_info()
-        if not info:
+        try:
+            info = self._get_device_info()
+            if not info:
+                self.support_signal.emit(None, None, None)
+                return
+        except Exception as e:
+            print(f"[DEBUG] Error in device check background: {e}")
             self.support_signal.emit(None, None, None)
             return
 
@@ -340,9 +366,6 @@ class DeviceWindow(QWidget):
                 msg_box.setIcon(QMessageBox.Information)
                 msg_box.setStandardButtons(QMessageBox.Ok)
                 msg_box.setDefaultButton(QMessageBox.Ok)
-                
-                # Auto-close after 3 seconds
-                QTimer.singleShot(3000, msg_box.accept)
                 
                 msg_box.setStyleSheet("""
                     QMessageBox {
@@ -554,7 +577,7 @@ class DeviceWindow(QWidget):
                 cmd,
                 capture_output=True,
                 text=True,
-                timeout=8,
+                timeout=3,  # Reduced timeout to prevent UI freezing
                 creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
             )
             if result.returncode != 0:

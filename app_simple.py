@@ -133,6 +133,168 @@ def check_device_page():
     except:
         return jsonify({'message': 'Device check page - use POST /api/check_device'})
 
+@app.route('/check_device/<device_model>/<ios_version>')
+def check_device_get(device_model, ios_version):
+    """فحص الجهاز بطريقة GET - مطلوب لتطبيق device_ui"""
+    try:
+        # البحث في قاعدة البيانات
+        conn = sqlite3.connect('devices.db')
+        cursor = conn.cursor()
+        
+        # فحص إصدار iOS
+        ios_parts = ios_version.split('.')
+        if len(ios_parts) >= 2:
+            ios_major = int(ios_parts[0])
+            ios_minor = int(ios_parts[1])
+            ios_patch = int(ios_parts[2]) if len(ios_parts) > 2 else 0
+        else:
+            conn.close()
+            return jsonify({
+                'supported': False,
+                'message': 'إصدار iOS غير صالح'
+            })
+        
+        # البحث عن الجهاز
+        cursor.execute('''
+            SELECT supported_versions FROM devices 
+            WHERE model = ?
+        ''', (device_model,))
+        
+        result = cursor.fetchone()
+        conn.close()
+        
+        if result:
+            supported_versions = result[0]
+            
+            # فحص النطاق المدعوم (مثل: 15.0-26.x)
+            if '-' in supported_versions:
+                min_version, max_version = supported_versions.split('-')
+                min_parts = min_version.split('.')
+                max_parts = max_version.replace('x', '999').split('.')
+                
+                min_major = int(min_parts[0])
+                min_minor = int(min_parts[1]) if len(min_parts) > 1 else 0
+                
+                max_major = int(max_parts[0])
+                max_minor = int(max_parts[1]) if len(max_parts) > 1 else 999
+                
+                # التحقق من النطاق
+                current_version = (ios_major, ios_minor, ios_patch)
+                min_version_tuple = (min_major, min_minor, 0)
+                max_version_tuple = (max_major, max_minor, 999)
+                
+                if min_version_tuple <= current_version <= max_version_tuple:
+                    return jsonify({
+                        'supported': True,
+                        'message': f'الجهاز {device_model} مع iOS {ios_version} مدعوم',
+                        'device_model': device_model,
+                        'ios_version': ios_version
+                    })
+            
+            return jsonify({
+                'supported': False,
+                'message': f'إصدار iOS {ios_version} غير مدعوم للجهاز {device_model}'
+            })
+        else:
+            return jsonify({
+                'supported': False,
+                'message': f'الجهاز {device_model} غير موجود في قاعدة البيانات'
+            })
+            
+    except Exception as e:
+        return jsonify({
+            'supported': False,
+            'message': f'خطأ في فحص الجهاز: {str(e)}'
+        })
+
+@app.route('/register_device', methods=['POST'])
+def register_device():
+    """تسجيل الجهاز وتفعيله"""
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({
+                'success': False,
+                'message': 'لا توجد بيانات'
+            }), 400
+        
+        serial = data.get('serial', '').strip()
+        product_type = data.get('product_type', '').strip()
+        ios_version = data.get('ios_version', '').strip()
+        
+        if not all([serial, product_type, ios_version]):
+            return jsonify({
+                'success': False,
+                'message': 'البيانات المطلوبة: serial, product_type, ios_version'
+            }), 400
+        
+        # التحقق من الدعم أولاً
+        conn = sqlite3.connect('devices.db')
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT supported_versions FROM devices 
+            WHERE model = ?
+        ''', (product_type,))
+        
+        result = cursor.fetchone()
+        
+        if not result:
+            conn.close()
+            return jsonify({
+                'success': False,
+                'message': f'الجهاز {product_type} غير مدعوم'
+            })
+        
+        # إنشاء جدول الأجهزة المسجلة إذا لم يكن موجوداً
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS registered_devices (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                serial TEXT UNIQUE NOT NULL,
+                product_type TEXT NOT NULL,
+                ios_version TEXT NOT NULL,
+                registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                status TEXT DEFAULT 'active'
+            )
+        ''')
+        
+        # تسجيل الجهاز
+        try:
+            cursor.execute('''
+                INSERT OR REPLACE INTO registered_devices 
+                (serial, product_type, ios_version, registration_date, status)
+                VALUES (?, ?, ?, datetime('now'), 'active')
+            ''', (serial, product_type, ios_version))
+            
+            conn.commit()
+            conn.close()
+            
+            return jsonify({
+                'success': True,
+                'message': f'تم تسجيل الجهاز {product_type} بنجاح',
+                'serial': serial,
+                'product_type': product_type,
+                'ios_version': ios_version,
+                'status': 'active'
+            })
+            
+        except sqlite3.IntegrityError:
+            conn.close()
+            return jsonify({
+                'success': True,
+                'message': f'الجهاز مسجل مسبقاً - {serial}',
+                'serial': serial,
+                'product_type': product_type,
+                'ios_version': ios_version,
+                'status': 'active'
+            })
+            
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': f'خطأ في تسجيل الجهاز: {str(e)}'
+        }), 500
+
 @app.route('/admin')
 def admin_page():
     """صفحة الإدارة المحسنة"""
